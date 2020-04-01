@@ -1,0 +1,103 @@
+<div id="top-nav" class="w-100 text-white">
+  <div class="navbar p-mobile-0">
+    <a href="#" class="">NewImpact</a>
+    <a class="pull-right">Some Text Here</a>
+  </div>
+  <div class="p-right-80 p-mobile-0">
+  <div id="d-block">
+    <div class="row">
+      <div class="col d-flex place-date-choice">
+        <div class="inner-wrapper">
+          <span>See what people are saying in </span>
+          <tag-input class="d-inline-block" [ngModel]="[]"
+                     [placeholder]="'Select Place'"
+                     [onTextChangeDebounce]="0"
+                     [maxItems]="2"
+                     [secondaryPlaceholder]="'Select Place'"
+                     [onlyFromAutocomplete]="true">
+            <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="['Seattle', 'Texas', 'Utah']">
+            </tag-input-dropdown>
+          </tag-input>
+
+        </div>
+       <div class="inner-wrapper mt-1">
+        <span class="px-2">during</span>
+        <form class="form-inline d-inline-block">
+          <div class="form-group">
+            <div class="input-group">
+              <input #myRangeInput
+                     class="form-control form-control-sm"
+                     placeholder="mm/dd/yyyy - mm/dd/yyyy"
+                     (click)="d.toggle()"
+                     name="dp"
+                     [(ngModel)]="model"
+                     [footerTemplate]="footerTemplate"
+                     ngbDatepicker
+                     [dayTemplate]="t"
+                     [autoClose]="false"
+                     [displayMonths]="2"
+                     [maxDate]="maxDate"
+                     [minDate]="minDate"
+                     #d="ngbDatepicker">
+
+              <ng-template #t let-date="date" let-focused="focused">
+                <span class="custom-day"
+                      [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+                      [class.faded]="isHovered(date) || isInside(date)"
+                      (click)="onDateSelection(date)"
+                      (mouseenter)="hoveredDate = date"
+                      (mouseleave)="hoveredDate = null">
+                  {{ date.day }}
+                </span>
+              </ng-template>
+              <ng-template #footerTemplate>
+                <hr class="my-0">
+                <button class="btn btn-primary btn-sm m-2 float-left" (click)="model = today; d.close()">Today</button>
+                <button class="btn btn-secondary btn-sm m-2" (click)="getWeek(today); d.close()">This Week</button>
+                <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
+              </ng-template>
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-light" (click)="d.toggle();  $event.stopPropagation();" (document:click)="d.close()" type="button">
+                  <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--    <hr /><pre>From: {{ fromDate | json }}</pre><pre>To: {{ toDate | json }}</pre>-->
+       </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="wrapper">
+  <div class="main-tabs">
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Trending">
+        <ng-template ngbTabContent>
+          <app-trending></app-trending>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Verbatim</ng-template>
+        <ng-template ngbTabContent>
+          <app-verbatim></app-verbatim>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>About This Tool</ng-template>
+        <ng-template ngbTabContent>
+          <p>
+            Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+            Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+          </p>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+
+  </div>
+</div>

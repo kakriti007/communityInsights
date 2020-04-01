@@ -1,0 +1,38 @@
+{
+    "devb": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-newimp-devb-134320-authRole",
+            "UnauthRoleArn": "arn:aws:iam::452613573753:role/amplify-newimp-devb-134320-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::452613573753:role/amplify-newimp-devb-134320-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-newimp-devb-134320-deployment",
+            "UnauthRoleName": "amplify-newimp-devb-134320-unauthRole",
+            "StackName": "amplify-newimp-devb-134320",
+            "StackId": "arn:aws:cloudformation:us-west-2:452613573753:stack/amplify-newimp-devb-134320/429dbca0-7390-11ea-9e85-02ad4dfa3158",
+            "AmplifyAppId": "d3h3db2qlk8zrv"
+        }
+    },
+    "test": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-newimp-test-162543-authRole",
+            "UnauthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-newimp-test-162543-deployment",
+            "UnauthRoleName": "amplify-newimp-test-162543-unauthRole",
+            "StackName": "amplify-newimp-test-162543",
+            "StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-test-162543/fd1bbbc0-73a6-11ea-9092-067bcb97a926",
+            "AmplifyAppId": "dut8ocpy6bb4j"
+        },
+        "categories": {
+            "api": {
+                "newImpact": {
+                    "rdsRegion": "us-west-2",
+                    "rdsClusterIdentifier": "arn:aws:rds:us-west-2:749571805792:cluster:newimpact-dev",
+                    "rdsSecretStoreArn": "arn:aws:secretsmanager:us-west-2:749571805792:secret:rds-db-credentials/cluster-N5UBIT4Z5XFIM2RXG66EWEC5TI/seanyang-8AyT01",
+                    "rdsDatabaseName": "newimpact"
+                }
+            }
+        }
+    }
+}

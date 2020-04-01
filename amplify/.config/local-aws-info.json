@@ -1,0 +1,12 @@
+{
+    "devb": {
+        "configLevel": "project",
+        "useProfile": true,
+        "profileName": "default"
+    },
+    "test": {
+        "configLevel": "project",
+        "useProfile": false,
+        "awsConfigFilePath": "C:\\Users\\iGuest\\.amplify\\awscloudformation\\i7fScIfNvm"
+    }
+}

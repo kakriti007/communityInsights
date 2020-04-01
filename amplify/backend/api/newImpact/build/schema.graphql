@@ -1,0 +1,295 @@
+type Todo {
+  id: ID!
+  name: String!
+  description: String
+}
+
+input CreateDiscourseInput {
+  discourse_id: Int!
+  content: String
+  source_id: Int
+  region: String
+  country_code: Int
+  created_time: AWSTimestamp
+  imported_time: AWSTimestamp
+  secondary_content: String
+}
+
+type Discourse {
+  discourse_id: Int!
+  content: String
+  source_id: Int
+  region: String
+  country_code: Int
+  created_time: AWSTimestamp
+  imported_time: AWSTimestamp
+  secondary_content: String
+}
+
+input UpdateDiscourseInput {
+  discourse_id: Int!
+  content: String
+  source_id: Int
+  region: String
+  country_code: Int
+  created_time: AWSTimestamp
+  imported_time: AWSTimestamp
+  secondary_content: String
+}
+
+input CreateImpactAreaInput {
+  impact_area_id: Int!
+  tag: String
+  source_parent_id: Int
+  impact_parent_id: Int
+  source_ontology: String
+}
+
+type ImpactArea {
+  impact_area_id: Int!
+  tag: String
+  source_parent_id: Int
+  impact_parent_id: Int
+  source_ontology: String
+}
+
+input UpdateImpactAreaInput {
+  impact_area_id: Int!
+  tag: String
+  source_parent_id: Int
+  impact_parent_id: Int
+  source_ontology: String
+}
+
+input CreateModelVersionInput {
+  model_id: Int!
+  model_task: String
+  created_time: AWSTimestamp
+}
+
+type ModelVersion {
+  model_id: Int!
+  model_task: String
+  created_time: AWSTimestamp
+}
+
+input UpdateModelVersionInput {
+  model_id: Int!
+  model_task: String
+  created_time: AWSTimestamp
+}
+
+input CreatePlatformInput {
+  platform_id: Int!
+  platform_desc: String
+  platform_type: String
+}
+
+type Platform {
+  platform_id: Int!
+  platform_desc: String
+  platform_type: String
+}
+
+input UpdatePlatformInput {
+  platform_id: Int!
+  platform_desc: String
+  platform_type: String
+}
+
+input CreateSourceInput {
+  source_id: Int!
+  platform_id: Int
+  source_desc: String
+  is_survey: Int
+}
+
+type Source {
+  source_id: Int!
+  platform_id: Int
+  source_desc: String
+  is_survey: Int
+}
+
+input UpdateSourceInput {
+  source_id: Int!
+  platform_id: Int
+  source_desc: String
+  is_survey: Int
+}
+
+type Mutation {
+  deleteDiscourse(discourse_id: Int!): Discourse
+  createDiscourse(createDiscourseInput: CreateDiscourseInput!): Discourse
+  updateDiscourse(updateDiscourseInput: UpdateDiscourseInput!): Discourse
+  deleteImpactArea(impact_area_id: Int!): ImpactArea
+  createImpactArea(createImpactAreaInput: CreateImpactAreaInput!): ImpactArea
+  updateImpactArea(updateImpactAreaInput: UpdateImpactAreaInput!): ImpactArea
+  deleteModelVersion(model_id: Int!): ModelVersion
+  createModelVersion(createModelVersionInput: CreateModelVersionInput!): ModelVersion
+  updateModelVersion(updateModelVersionInput: UpdateModelVersionInput!): ModelVersion
+  deletePlatform(platform_id: Int!): Platform
+  createPlatform(createPlatformInput: CreatePlatformInput!): Platform
+  updatePlatform(updatePlatformInput: UpdatePlatformInput!): Platform
+  deleteSource(source_id: Int!): Source
+  createSource(createSourceInput: CreateSourceInput!): Source
+  updateSource(updateSourceInput: UpdateSourceInput!): Source
+  createTodo(input: CreateTodoInput!, condition: ModelTodoConditionInput): Todo
+  updateTodo(input: UpdateTodoInput!, condition: ModelTodoConditionInput): Todo
+  deleteTodo(input: DeleteTodoInput!, condition: ModelTodoConditionInput): Todo
+}
+
+type Query {
+  getDiscourse(discourse_id: Int!): Discourse
+  listDiscourses: [Discourse]
+  getImpactArea(impact_area_id: Int!): ImpactArea
+  listImpactAreas: [ImpactArea]
+  getModelVersion(model_id: Int!): ModelVersion
+  listModelVersions: [ModelVersion]
+  getPlatform(platform_id: Int!): Platform
+  listPlatforms: [Platform]
+  getSource(source_id: Int!): Source
+  listSources: [Source]
+  getTodo(id: ID!): Todo
+  listTodos(filter: ModelTodoFilterInput, limit: Int, nextToken: String): ModelTodoConnection
+}
+
+type Subscription {
+  onCreateDiscourse: Discourse @aws_subscribe(mutations: ["createDiscourse"])
+  onCreateImpactArea: ImpactArea @aws_subscribe(mutations: ["createImpactArea"])
+  onCreateModelVersion: ModelVersion @aws_subscribe(mutations: ["createModelVersion"])
+  onCreatePlatform: Platform @aws_subscribe(mutations: ["createPlatform"])
+  onCreateSource: Source @aws_subscribe(mutations: ["createSource"])
+  onCreateTodo: Todo @aws_subscribe(mutations: ["createTodo"])
+  onUpdateTodo: Todo @aws_subscribe(mutations: ["updateTodo"])
+  onDeleteTodo: Todo @aws_subscribe(mutations: ["deleteTodo"])
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelTodoConnection {
+  items: [Todo]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelTodoFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  and: [ModelTodoFilterInput]
+  or: [ModelTodoFilterInput]
+  not: ModelTodoFilterInput
+}
+
+input CreateTodoInput {
+  id: ID
+  name: String!
+  description: String
+}
+
+input UpdateTodoInput {
+  id: ID!
+  name: String
+  description: String
+}
+
+input DeleteTodoInput {
+  id: ID
+}
+
+input ModelTodoConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  and: [ModelTodoConditionInput]
+  or: [ModelTodoConditionInput]
+  not: ModelTodoConditionInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}

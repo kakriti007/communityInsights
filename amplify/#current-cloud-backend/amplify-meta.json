@@ -1,0 +1,15 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-newimp-test-162543-authRole",
+            "UnauthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-newimp-test-162543-deployment",
+            "UnauthRoleName": "amplify-newimp-test-162543-unauthRole",
+            "StackName": "amplify-newimp-test-162543",
+            "StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-test-162543/fd1bbbc0-73a6-11ea-9092-067bcb97a926",
+            "AmplifyAppId": "dut8ocpy6bb4j"
+        }
+    }
+}
