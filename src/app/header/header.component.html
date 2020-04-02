@@ -1,3 +1,11 @@
+<div *ngIf="loading">
+  Loading...
+</div>
+<div *ngFor="let impactAreaData of impactAreaDatas">
+  ---Some Random text to assess if I am getting the data
+  {{impactAreaData}}
+</div>
+
 <div id="top-nav" class="w-100 text-white">
   <div class="navbar p-mobile-0">
     <a href="#" class="">NewImpact</a>

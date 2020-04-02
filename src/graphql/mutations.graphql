@@ -1,0 +1,125 @@
+# this is an auto generated file. This will be overwritten
+mutation DeleteDiscourse($discourse_id: Int!) {
+  deleteDiscourse(discourse_id: $discourse_id) {
+    discourse_id
+    content
+    source_id
+    region
+    country_code
+    created_time
+    imported_time
+  }
+}
+mutation CreateDiscourse($createDiscourseInput: CreateDiscourseInput!) {
+  createDiscourse(createDiscourseInput: $createDiscourseInput) {
+    discourse_id
+    content
+    source_id
+    region
+    country_code
+    created_time
+    imported_time
+  }
+}
+mutation UpdateDiscourse($updateDiscourseInput: UpdateDiscourseInput!) {
+  updateDiscourse(updateDiscourseInput: $updateDiscourseInput) {
+    discourse_id
+    content
+    source_id
+    region
+    country_code
+    created_time
+    imported_time
+  }
+}
+mutation DeleteImpactArea($impact_area_id: Int!) {
+  deleteImpactArea(impact_area_id: $impact_area_id) {
+    impact_area_id
+    tag
+    source_parent_id
+    impact_parent_id
+    source_ontology
+  }
+}
+mutation CreateImpactArea($createImpactAreaInput: CreateImpactAreaInput!) {
+  createImpactArea(createImpactAreaInput: $createImpactAreaInput) {
+    impact_area_id
+    tag
+    source_parent_id
+    impact_parent_id
+    source_ontology
+  }
+}
+mutation UpdateImpactArea($updateImpactAreaInput: UpdateImpactAreaInput!) {
+  updateImpactArea(updateImpactAreaInput: $updateImpactAreaInput) {
+    impact_area_id
+    tag
+    source_parent_id
+    impact_parent_id
+    source_ontology
+  }
+}
+mutation DeleteModelVersion($model_id: Int!) {
+  deleteModelVersion(model_id: $model_id) {
+    model_id
+    model_task
+    created_time
+  }
+}
+mutation CreateModelVersion(
+  $createModelVersionInput: CreateModelVersionInput!
+) {
+  createModelVersion(createModelVersionInput: $createModelVersionInput) {
+    model_id
+    model_task
+    created_time
+  }
+}
+mutation UpdateModelVersion(
+  $updateModelVersionInput: UpdateModelVersionInput!
+) {
+  updateModelVersion(updateModelVersionInput: $updateModelVersionInput) {
+    model_id
+    model_task
+    created_time
+  }
+}
+mutation DeletePlatform($platform_id: Int!) {
+  deletePlatform(platform_id: $platform_id) {
+    platform_id
+    platform_desc
+  }
+}
+mutation CreatePlatform($createPlatformInput: CreatePlatformInput!) {
+  createPlatform(createPlatformInput: $createPlatformInput) {
+    platform_id
+    platform_desc
+  }
+}
+mutation UpdatePlatform($updatePlatformInput: UpdatePlatformInput!) {
+  updatePlatform(updatePlatformInput: $updatePlatformInput) {
+    platform_id
+    platform_desc
+  }
+}
+mutation DeleteSource($source_id: Int!) {
+  deleteSource(source_id: $source_id) {
+    source_id
+    platform_id
+    source_desc
+  }
+}
+mutation CreateSource($createSourceInput: CreateSourceInput!) {
+  createSource(createSourceInput: $createSourceInput) {
+    source_id
+    platform_id
+    source_desc
+  }
+}
+mutation UpdateSource($updateSourceInput: UpdateSourceInput!) {
+  updateSource(updateSourceInput: $updateSourceInput) {
+    source_id
+    platform_id
+    source_desc
+  }
+}

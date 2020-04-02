@@ -13,6 +13,37 @@ import { NgModel } from "@angular/forms";
 import { TagInputModule } from 'ngx-chips';
 
 import { Subscription } from 'rxjs';
+
+
+//This is new code for api addition
+import { Observable } from 'rxjs';
+// import { pluck } from 'rxjs/operators';
+
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
+
+import PubSub from '@aws-amplify/pubsub';
+import API from '@aws-amplify/api';
+import awsmobile from '../../aws-exports';
+
+Amplify.configure(awsmobile);
+PubSub.configure(awsmobile)
+
+import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
+
+import Amplify, { Auth } from 'aws-amplify';
+import { pluck } from 'rxjs/operators';
+
+// const client = new AWSAppSyncClient({
+//   url: awsmobile.aws_appsync_graphqlEndpoint,
+//   region: awsmobile.aws_appsync_region,
+//   auth: {
+//     type: awsmobile.aws_appsync_authenticationType, // or type: awsconfig.aws_appsync_authenticationType,
+//     apiKey: awsmobile.aws_appsync_apiKey
+//   }
+// });
+//new code ends
+
 const now = new Date();
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -31,6 +62,16 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+
+  
+  impactAreaDatas: [];
+  loading = true;
+  error: any;
+
+
+
+
   startDate: NgbDateStruct;
   maxDate: NgbDateStruct;
   minDate: NgbDateStruct;
@@ -61,8 +102,35 @@ export class HeaderComponent implements OnInit {
   onTouched: any;
 
 
-  constructor(element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter, private calendar: NgbCalendar) {}
+  constructor(private apollo: Apollo, element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter, private calendar: NgbCalendar) {}
   ngOnInit() {
+
+    this.apollo
+      .watchQuery<any>({
+        query: gql`
+          {
+            getImpactArea {
+              impact_area_id
+              tag
+              source_parent_id
+              impact_parent_id
+              source_ontology
+            }
+          }
+        `
+      }).valueChanges.pipe(pluck('data'));
+      // .subscribe(
+      //   ({ data, loading }) => {
+      //     this.impactAreaDatas = data && data.getImpactArea;
+      //     this.loading = loading;
+      //   },
+      //   error => {
+      //     this.loading = false;
+      //     this.error = error;
+      //     console.log(">>>>>>>>", error);
+      //   }
+      // );
+
 
     this.startDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
     this.maxDate = { year: now.getFullYear() + 1, month: now.getMonth() + 1, day: now.getDate() };

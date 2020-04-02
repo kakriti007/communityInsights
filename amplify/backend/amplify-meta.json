@@ -27,7 +27,29 @@
                         }
                     }
                 }
-            }
+            },
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apinewImpact"
+            },
+            "lastPushTimeStamp": "2020-04-02T16:04:09.699Z"
+        },
+        "newimpactdata-dev": {
+            "service": "AppSync",
+            "output": {
+                "authConfig": {
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY"
+                    },
+                    "additionalAuthenticationProviders": null
+                },
+                "GraphQLAPIIdOutput": "cmu5hisxh5fqxpn2wmqlg74cmi",
+                "GraphQLAPIEndpointOutput": "https://hv64oxco7naipotbgrduo7lwla.appsync-api.us-west-2.amazonaws.com/graphql",
+                "name": "newimpactdata-dev",
+                "region": "us-west-2",
+                "GraphQLAPIKeyOutput": "da2-krr6uy4gzvdqfciq6is2s6xchu"
+            },
+            "lastPushTimeStamp": "2020-04-01T00:39:47.283Z"
         }
     }
 }

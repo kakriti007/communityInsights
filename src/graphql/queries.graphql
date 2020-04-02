@@ -1,0 +1,81 @@
+# this is an auto generated file. This will be overwritten
+query GetDiscourse($discourse_id: Int!) {
+  getDiscourse(discourse_id: $discourse_id) {
+    discourse_id
+    content
+    source_id
+    region
+    country_code
+    created_time
+    imported_time
+  }
+}
+query ListDiscourses {
+  listDiscourses {
+    discourse_id
+    content
+    source_id
+    region
+    country_code
+    created_time
+    imported_time
+  }
+}
+query GetImpactArea($impact_area_id: Int!) {
+  getImpactArea(impact_area_id: $impact_area_id) {
+    impact_area_id
+    tag
+    source_parent_id
+    impact_parent_id
+    source_ontology
+  }
+}
+query ListImpactAreas {
+  listImpactAreas {
+    impact_area_id
+    tag
+    source_parent_id
+    impact_parent_id
+    source_ontology
+  }
+}
+query GetModelVersion($model_id: Int!) {
+  getModelVersion(model_id: $model_id) {
+    model_id
+    model_task
+    created_time
+  }
+}
+query ListModelVersions {
+  listModelVersions {
+    model_id
+    model_task
+    created_time
+  }
+}
+query GetPlatform($platform_id: Int!) {
+  getPlatform(platform_id: $platform_id) {
+    platform_id
+    platform_desc
+  }
+}
+query ListPlatforms {
+  listPlatforms {
+    platform_id
+    platform_desc
+  }
+}
+query GetSource($source_id: Int!) {
+  getSource(source_id: $source_id) {
+    source_id
+    platform_id
+    source_desc
+  }
+}
+query ListSources {
+  listSources {
+    source_id
+    platform_id
+    source_desc
+  }
+}

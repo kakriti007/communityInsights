@@ -23,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartComponent } from './chart/chart.component';
 import { TreeMapComponent } from './tree-map/tree-map.component';
 import { TagInputModule } from 'ngx-chips';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { TagInputModule } from 'ngx-chips';
     NgbModule,
     ReactiveFormsModule,
     TagInputModule,
+    GraphQLModule,
+    HttpClientModule,
   ],
   exports: [],
   providers: [
