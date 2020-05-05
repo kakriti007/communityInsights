@@ -9,13 +9,14 @@ input CreateDiscourseInput {
   content: String
   source_id: Int
   region: String
-  country_code: Int
   created_time: AWSDate
   imported_time: AWSDate
   secondary_content: String
   isPost: Int
   post_id: Int
   ori_id: String
+  country_code: String
+  url: String
 }
 
 type Discourse {
@@ -23,13 +24,14 @@ type Discourse {
   content: String
   source_id: Int
   region: String
-  country_code: Int
   created_time: AWSDate
   imported_time: AWSDate
   secondary_content: String
   isPost: Int
   post_id: Int
   ori_id: String
+  country_code: String
+  url: String
 }
 
 input UpdateDiscourseInput {
@@ -37,13 +39,14 @@ input UpdateDiscourseInput {
   content: String
   source_id: Int
   region: String
-  country_code: Int
   created_time: AWSDate
   imported_time: AWSDate
   secondary_content: String
   isPost: Int
   post_id: Int
   ori_id: String
+  country_code: String
+  url: String
 }
 
 input CreateImpactAreaInput {

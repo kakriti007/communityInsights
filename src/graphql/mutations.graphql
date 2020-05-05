@@ -10,17 +10,6 @@ mutation DeleteDiscourse($discourse_id: Int!) {
     imported_time
   }
 }
-mutation CreateDiscourse($createDiscourseInput: CreateDiscourseInput!) {
-  createDiscourse(createDiscourseInput: $createDiscourseInput) {
-    discourse_id
-    content
-    source_id
-    region
-    country_code
-    created_time
-    imported_time
-  }
-}
 mutation UpdateDiscourse($updateDiscourseInput: UpdateDiscourseInput!) {
   updateDiscourse(updateDiscourseInput: $updateDiscourseInput) {
     discourse_id

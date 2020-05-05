@@ -42,7 +42,7 @@
                 "GraphQLAPIKeyOutput": "da2-bsobwsfrmbf7thtmw4tbce4x4y"
             },
             "rdsInit": true,
-            "lastPushTimeStamp": "2020-05-03T20:32:33.849Z",
+            "lastPushTimeStamp": "2020-05-05T05:25:17.386Z",
             "providerMetadata": {
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/api/cloudformation-template.json",
                 "logicalId": "apinewImpact"
@@ -63,7 +63,7 @@
                 "region": "us-west-2",
                 "GraphQLAPIKeyOutput": "da2-zy5mhx7dlzaxdg4b2gw6vi6wya"
             },
-            "lastPushTimeStamp": "2020-04-30T10:14:12.030Z"
+            "lastPushTimeStamp": "2020-05-05T05:59:33.377Z"
         }
     },
     "hosting": {
@@ -74,7 +74,7 @@
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/hosting/template.json",
                 "logicalId": "hostingS3AndCloudFront"
             },
-            "lastPushTimeStamp": "2020-05-03T20:32:33.867Z"
+            "lastPushTimeStamp": "2020-05-05T05:25:17.366Z"
         }
     }
 }

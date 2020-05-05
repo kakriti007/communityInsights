@@ -9,7 +9,6 @@ input CreateDiscourseInput {
   content: String
   source_id: Int
   region: String
-  country_code: Int
   created_time: AWSTimestamp
   imported_time: AWSTimestamp
   secondary_content: String
@@ -22,7 +21,6 @@ type Discourse {
   content: String
   source_id: Int
   region: String
-  country_code: Int
   created_time: AWSTimestamp
   imported_time: AWSTimestamp
   secondary_content: String
@@ -35,7 +33,6 @@ input UpdateDiscourseInput {
   content: String
   source_id: Int
   region: String
-  country_code: Int
   created_time: AWSTimestamp
   imported_time: AWSTimestamp
   secondary_content: String

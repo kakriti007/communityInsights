@@ -90,55 +90,56 @@ export class TrendingComponent implements OnInit{
 
 
   getTrendingTopics () {
-    this.loading = true;
-    $("#trending-topics").find('span').remove();
-    this.listTrendingTopics= [];
-    this.selectedTopics = true;
-    this.apollo
-      .query<any>({
-        query: gql`
-        query listTrendingTopicsMaster($start: String!, $end: String!, $region: String!) {
-            listTrendingTopicsMaster(start: $start, end: $end, region: $region){
-              topic
-              counts
-              sentiment
-              positive
-              negative
-              neutral
-            }
-          }
-        `,
-        variables: {
-          start: this.start,
-          end: this.end,
-          region: "King County"
-        }
-      }
+  //   this.loading = true;
+  //   $("#trending-topics").find('span').remove();
+  //   this.listTrendingTopics= [];
+  //   this.selectedTopics = true;
+  //   this.apollo
+  //     .query<any>({
+  //       query: gql`
+  //       query listTrendingTopicsMaster($start: String!, $end: String!, $region: String!) {
+  //           listTrendingTopicsMaster(start: $start, end: $end, region: $region){
+  //             topic
+  //             counts
+  //             sentiment
+  //             positive
+  //             negative
+  //             neutral
+  //           }
+  //         }
+  //       `,
+  //       variables: {
+  //         start: this.start,
+  //         end: this.end,
+  //         region: "King County"
+  //       }
+  //     }
       
       
-      )
-      .subscribe(
-        ({ data, loading }) => {
-          this.listTrendingTopics = data && data.listTrendingTopicsMaster;
-          this.listTrendingTopics.length === 0 ? this.empty = true : this.empty = false;
-        },error => {
-          this.error = error;
-          console.log("error is: ", error);
-        }
-      ).add(() => {
-         if (this.listTrendingTopics.length!=0){
-          this.empty = false;
-          this.functionGetTrendingData(this.listTrendingTopics);
-         }
-         else {
-           this.empty = true;
-           this.loading = false;
-         }
+  //     )
+  //     .subscribe(
+  //       ({ data, loading }) => {
+  //         this.listTrendingTopics = data && data.listTrendingTopicsMaster;
+  //         this.listTrendingTopics.length === 0 ? this.empty = true : this.empty = false;
+  //       },error => {
+  //         this.error = error;
+  //         console.log("error is: ", error);
+  //       }
+  //     ).add(() => {
+  //        if (this.listTrendingTopics.length!=0){
+  //         this.empty = false;
+  //         this.functionGetTrendingData(this.listTrendingTopics);
+  //        }
+  //        else {
+  //          this.empty = true;
+  //          this.loading = false;
+  //        }
           
-      })
-  }
+  //     })
+   }
 
   getHashtags(){
+    
     this.loading = true;
     $("#trending-topics").find('span').remove();
     this.selectedTopics = false;

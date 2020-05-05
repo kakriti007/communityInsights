@@ -112,21 +112,6 @@ query ListTrendingHashtags($start: String!, $end: String!) {
     start_date
   }
 }
-query ListTrendingTopicsMaster(
-  $start: String!
-  $end: String!
-  $region: String!
-) {
-  listTrendingTopicsMaster(start: $start, end: $end, region: $region) {
-    topic
-    counts
-    sentiment
-    positive
-    negative
-    neutral
-    created_date
-  }
-}
 query DiscourseTrendingTopics(
   $start: String!
   $end: String!
@@ -139,17 +124,17 @@ query DiscourseTrendingTopics(
     region: $region
     topic: $topic
   ) {
-	counts
-  sentiment	
-  topic
-  date
+    counts
+    sentiment
+    topic
+    date
   }
 }
 query HashtagMaster(
   $start: String!
   $end: String!
   $region: String!
-  $hashtag: String!
+  $topic: String!
 ) {
   hashtagMaster(start: $start, end: $end, region: $region, topic: $topic) {
     counts

@@ -6,16 +6,6 @@ import API, { graphqlOperation } from "@aws-amplify/api";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import * as Observable from "zen-observable";
 
-export type CreateDiscourseInput = {
-  discourse_id: number;
-  content?: string | null;
-  source_id?: number | null;
-  region?: string | null;
-  country_code?: number | null;
-  created_time?: string | null;
-  imported_time?: string | null;
-};
-
 export type UpdateDiscourseInput = {
   discourse_id: number;
   content?: string | null;
@@ -77,17 +67,6 @@ export type UpdateSourceInput = {
 };
 
 export type DeleteDiscourseMutation = {
-  __typename: "Discourse";
-  discourse_id: number;
-  content: string | null;
-  source_id: number | null;
-  region: string | null;
-  country_code: number | null;
-  created_time: string | null;
-  imported_time: string | null;
-};
-
-export type CreateDiscourseMutation = {
   __typename: "Discourse";
   discourse_id: number;
   content: string | null;
@@ -309,31 +288,20 @@ export type ListTrendingHashtagsQuery = {
   start_date: string | null;
 };
 
-export type ListTrendingTopicsMasterQuery = {
-  __typename: "listTrendingTopicsMaster";
-  topic: string;
-  counts: number | null;
-  sentiment: number | null;
-  positive: number | null;
-  negative: number | null;
-  neutral: number | null;
-  created_date: string | null;
-};
-
 export type DiscourseTrendingTopicsQuery = {
   __typename: "discourseTrendingTopics";
   counts: number | null;
-  sentiment	: number | null;
+  sentiment: number | null;
   topic: string;
-  date:string | null
+  date: string | null;
 };
 
 export type HashtagMasterQuery = {
   __typename: "hashtagMaster";
   counts: number | null;
-  sentiment	: number | null;
+  sentiment: number | null;
   topic: string;
-  date:string | null
+  date: string | null;
 };
 
 export type OnCreateDiscourseSubscription = {
@@ -402,29 +370,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteDiscourseMutation>response.data.deleteDiscourse;
-  }
-  async CreateDiscourse(
-    createDiscourseInput: CreateDiscourseInput
-  ): Promise<CreateDiscourseMutation> {
-    const statement = `mutation CreateDiscourse($createDiscourseInput: CreateDiscourseInput!) {
-        createDiscourse(createDiscourseInput: $createDiscourseInput) {
-          __typename
-          discourse_id
-          content
-          source_id
-          region
-          country_code
-          created_time
-          imported_time
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      createDiscourseInput
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateDiscourseMutation>response.data.createDiscourse;
   }
   async UpdateDiscourse(
     updateDiscourseInput: UpdateDiscourseInput
@@ -895,35 +840,6 @@ export class APIService {
     )) as any;
     return <Array<ListTrendingHashtagsQuery>>response.data.listTrendingHashtags;
   }
-  async ListTrendingTopicsMaster(
-    start: string,
-    end: string,
-    region: string
-  ): Promise<Array<ListTrendingTopicsMasterQuery>> {
-    const statement = `query ListTrendingTopicsMaster($start: String!, $end: String!, $region: String!) {
-        listTrendingTopicsMaster(start: $start, end: $end, region: $region) {
-          __typename
-          topic
-          counts
-          sentiment
-          positive
-          negative
-          neutral
-          created_date
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      start,
-      end,
-      region
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <Array<ListTrendingTopicsMasterQuery>>(
-      response.data.listTrendingTopicsMaster
-    );
-  }
   async DiscourseTrendingTopics(
     start: string,
     end: string,
@@ -934,7 +850,7 @@ export class APIService {
         discourseTrendingTopics(start: $start, end: $end, region: $region, topic: $topic) {
           __typename
           counts
-          sentiment	
+          sentiment
           topic
           date
         }
@@ -956,14 +872,14 @@ export class APIService {
     start: string,
     end: string,
     region: string,
-    hashtag: string
+    topic: string
   ): Promise<Array<HashtagMasterQuery>> {
-    const statement = `query HashtagMaster($start: String!, $end: String!, $region: String!, $hashtag: String!) {
-        hashtagMaster(start: $start, end: $end, region: $region, hashtag: $hashtag) {
+    const statement = `query HashtagMaster($start: String!, $end: String!, $region: String!, $topic: String!) {
+        hashtagMaster(start: $start, end: $end, region: $region, topic: $topic) {
           __typename
           counts
-          topic
           sentiment
+          topic
           date
         }
       }`;
@@ -971,7 +887,7 @@ export class APIService {
       start,
       end,
       region,
-      hashtag
+      topic
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
