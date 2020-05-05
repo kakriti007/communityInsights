@@ -1,26 +1,29 @@
 import { Component, ViewChild, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { NgModel } from "@angular/forms";
 import {
-  NgbDatepicker,
-  NgbInputDatepicker,
   NgbDateStruct,
   NgbCalendar,
-  NgbDateAdapter,
-  NgbDateParserFormatter
 } from '@ng-bootstrap/ng-bootstrap';
-import { NgModel } from "@angular/forms";
+import { map, mergeMap } from 'rxjs/operators';
+import { DataTransferService } from '.././data-transfer.service';
+import { Observable } from 'rxjs';
+// import { pluck } from 'rxjs/operators';
 
-import { Subscription } from 'rxjs';
-const now = new Date();
-const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
-  one && two && two.year === one.year && two.month === one.month && two.day === one.day;
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
 
-const before = (one: NgbDateStruct, two: NgbDateStruct) =>
-  !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
-    ? false : one.day < two.day : one.month < two.month : one.year < two.year;
+import PubSub from '@aws-amplify/pubsub';
+import API from '@aws-amplify/api';
+import awsmobile from '../../aws-exports';
 
-const after = (one: NgbDateStruct, two: NgbDateStruct) =>
-  !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
-    ? false : one.day > two.day : one.month > two.month : one.year > two.year;
+Amplify.configure(awsmobile);
+PubSub.configure(awsmobile)
+
+import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
+
+import Amplify, { Auth } from 'aws-amplify';
+import { pluck } from 'rxjs/operators';
+
 declare var $: any;
 
 @Component({
@@ -28,143 +31,176 @@ declare var $: any;
   templateUrl: './trending.component.html',
   styleUrls: ['./trending.component.css']
 })
-export class TrendingComponent implements OnInit {
-  startDate: NgbDateStruct;
-  maxDate: NgbDateStruct;
-  minDate: NgbDateStruct;
-  hoveredDate: NgbDateStruct;
-  fromDate: any;
-  toDate: any;
+export class TrendingComponent implements OnInit{
   model: any;
-  word_list: any;
-   
-  private _subscription: Subscription;
-  private _selectSubscription: Subscription;
-  @ViewChild("d") input: NgbInputDatepicker;
-  @ViewChild(NgModel) datePick: NgModel;
-  @ViewChild('myRangeInput') myRangeInput: ElementRef;
+  loading = true;
+  error: any;
+  topics= [];
+  selectedTopics: boolean = true;
+  start = String;
+  end= String;
+  listHashtags = [];
+  listTrendingTopics = [];
+  selectedData: any;
+  option: string;
 
-  isHovered = date =>
-    this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate)
-  isInside = date => after(date, this.fromDate) && before(date, this.toDate);
-  isFrom = date => equals(date, this.fromDate);
-  isTo = date => equals(date, this.toDate);
-  constructor(element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter) {
+  p: number = 1;
 
+  empty: boolean = false;
+  //Variables for assigning weight to tag cloud:
+
+  minWeight = 1;
+  maxWeight = 20;
+
+  text = '';
+  dates=[];
+  finalDates= [];
+  constructor(private data: DataTransferService,private calendar: NgbCalendar, element: ElementRef, private renderer: Renderer2, private apollo: Apollo) {
+  } 
+
+  functionGetTrendingData (topicHashtag){
+    let finalTrending = [];
+
+    let length =  topicHashtag.length
+    let MaxViewed = topicHashtag[0].counts;
+    let MinViewed = topicHashtag[length-1].counts;
+
+    if(MaxViewed!= MinViewed){
+      for(let counts in topicHashtag){
+        var fontsize  = (this.minWeight+((topicHashtag[counts].counts - MinViewed)* (this.maxWeight - this.minWeight ) / ( MaxViewed - MinViewed )));
+        if(topicHashtag[0].hasOwnProperty("hashtag")){
+          finalTrending.push({
+            text: topicHashtag[counts].hashtag,
+            weight: Math.round(fontsize),
+          });
+        }
+        else {
+          finalTrending.push({
+            text: topicHashtag[counts].topic,
+            weight: Math.round(fontsize),
+          });
+        }
+      }
+    }
+    this.loading = false;
+    setTimeout(function () { 
+      $("#trending-topics").jQCloud(finalTrending);
+     }, 500);
   }
 
+
+  getTrendingTopics () {
+    this.loading = true;
+    $("#trending-topics").find('span').remove();
+    this.listTrendingTopics= [];
+    this.selectedTopics = true;
+    this.apollo
+      .query<any>({
+        query: gql`
+        query listTrendingTopicsMaster($start: String!, $end: String!, $region: String!) {
+            listTrendingTopicsMaster(start: $start, end: $end, region: $region){
+              topic
+              counts
+              sentiment
+              positive
+              negative
+              neutral
+            }
+          }
+        `,
+        variables: {
+          start: this.start,
+          end: this.end,
+          region: "King County"
+        }
+      }
+      
+      
+      )
+      .subscribe(
+        ({ data, loading }) => {
+          this.listTrendingTopics = data && data.listTrendingTopicsMaster;
+          this.listTrendingTopics.length === 0 ? this.empty = true : this.empty = false;
+        },error => {
+          this.error = error;
+          console.log("error is: ", error);
+        }
+      ).add(() => {
+         if (this.listTrendingTopics.length!=0){
+          this.empty = false;
+          this.functionGetTrendingData(this.listTrendingTopics);
+         }
+         else {
+           this.empty = true;
+           this.loading = false;
+         }
+          
+      })
+  }
+
+  getHashtags(){
+    this.loading = true;
+    $("#trending-topics").find('span').remove();
+    this.selectedTopics = false;
+    this.listHashtags= [];
+    this.apollo
+      .query<any>({
+        query: gql`
+            query listTrendingHashtags($start: String!, $end: String!) {
+              listTrendingHashtags (start: $start, end: $end){
+              counts
+              sentiment
+              negative
+              neutral
+              positive
+              hashtag
+              start_date
+            }
+          }
+        `, 
+        variables: {
+          start: this.start,
+          end: this.end
+        }
+      })
+      .subscribe(
+        ({ data, loading }) => {
+          this.listHashtags = data && data.listTrendingHashtags;
+        },error => {
+          this.error = error;
+          console.log("error is: ", error);
+        }
+      ).add(() => {
+        if (this.listHashtags.length!=0){
+          this.empty = false;
+          this.functionGetTrendingData(this.listHashtags);
+         }
+         else {
+           this.empty = true;
+           this.loading = false;
+         }
+      })
+  }
   
 
   ngOnInit() {
-    this.word_list = [
-      { text: "Lorem", weight: 13, link: "https://github.com/DukeLeNoir/jQCloud" },
-      { text: "Ipsum", weight: 10.5, html: { title: "My Title", "class": "custom-class" }, link: { href: "http://jquery.com/", target: "_blank" } },
-      { text: "Dolor", weight: 9.4 },
-      { text: "Sit", weight: 8 },
-      { text: "Amet", weight: 6.2 },
-      { text: "Consectetur", weight: 5 },
-      { text: "Adipiscing", weight: 5 },
-      { text: "Elit", weight: 5 },
-      { text: "Nam et", weight: 5 },
-      { text: "Leo", weight: 4 },
-      { text: "Sapien", weight: 4 },
-      { text: "Pellentesque", weight: 3 },
-      { text: "habitant", weight: 3 },
-      { text: "morbi", weight: 3 },
-      { text: "tristisque", weight: 3 },
-      { text: "senectus", weight: 3 },
-      { text: "et netus", weight: 3 },
-      { text: "et malesuada", weight: 3 },
-      { text: "Adipiscing", weight: 5 },
-      { text: "Elit", weight: 5 },
-      { text: "Nam et", weight: 5 },
-      { text: "Leo", weight: 4 },
-      { text: "Sapien", weight: 4 },
-      { text: "Pellentesque", weight: 3 },
-      { text: "habitant", weight: 3 },
-      { text: "morbi", weight: 3 },
-      { text: "tristisque", weight: 3 },
-      { text: "senectus", weight: 3 },
-      { text: "et netus", weight: 3 },
-      { text: "et malesuada", weight: 3 },
-      { text: "Adipiscing", weight: 5 },
-      { text: "Elit", weight: 5 },
-      { text: "Nam et", weight: 5 },
-      { text: "Leo", weight: 4 },
-      { text: "Sapien", weight: 4 },
-      { text: "Pellentesque", weight: 3 },
-      { text: "habitant", weight: 3 },
-      { text: "morbi", weight: 3 },
-      { text: "tristisque", weight: 3 },
-      { text: "senectus", weight: 3 },
-      { text: "et netus", weight: 3 },
-      { text: "et malesuada", weight: 3 },
-      { text: "Adipiscing", weight: 5 },
-      { text: "Elit", weight: 5 },
-      { text: "Nam et", weight: 5 },
-      { text: "Leo", weight: 4 },
-      { text: "Sapien", weight: 4 },
-      { text: "Pellentesque", weight: 3 },
-      { text: "habitant", weight: 3 },
-      { text: "morbi", weight: 3 },
-      { text: "tristisque", weight: 3 },
-      { text: "senectus", weight: 3 },
-      { text: "et netus", weight: 3 },
-      { text: "et malesuada", weight: 3 },
-      { text: "fames", weight: 2 },
-      { text: "ac turpis", weight: 2 },
-      { text: "egestas", weight: 2 },
-      { text: "Aenean", weight: 2 },
-      { text: "vestibulum", weight: 2 },
-      { text: "elit", weight: 2 },
-      { text: "sit amet", weight: 2 },
-      { text: "metus", weight: 2 },
-      { text: "adipiscing", weight: 2 },
-      { text: "ut ultrices", weight: 2 },
-      { text: "justo", weight: 1 },
-      { text: "dictum", weight: 1 },
-      { text: "Ut et leo", weight: 1 },
-      { text: "metus", weight: 1 },
-      { text: "at molestie", weight: 1 },
-      { text: "purus", weight: 1 },
-      { text: "Curabitur", weight: 1 },
-      { text: "diam", weight: 1 },
-      { text: "dui", weight: 1 },
-      { text: "ullamcorper", weight: 1 },
-      { text: "id vuluptate ut", weight: 1 },
-      { text: "mattis", weight: 1 },
-      { text: "et nulla", weight: 1 },
-      { text: "Sed", weight: 1 }
-    ];
-    $("#trending-topics").jQCloud(this.word_list);
-    this.startDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-    this.maxDate = { year: now.getFullYear() + 1, month: now.getMonth() + 1, day: now.getDate() };
-    this.minDate = { year: now.getFullYear() - 1, month: now.getMonth() + 1, day: now.getDate() };
+    //word list data structure:  { text: "Lorem", weight: 13, link: "https://github.com/DukeLeNoir/jQCloud" },
+    this.data.share.subscribe(x=>
+      {
+        if(this.text!= x){
+          this.text=x;
+          this.dates = this.text.split(' to ');
+          
+          this.start = this.dates[0];
+          this.end = this.dates[1];
+          $("#trending-topics").find('span').remove();
+          this.selectedTopics ? this.getTrendingTopics() : this.getHashtags();
+        }
+      });
+    }
+
+  updateClicked(selectedData){
+    this.data.updateClickedData(selectedData);
   }
 
-  onDateSelection(date: NgbDateStruct) {
-    let parsed = '';
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && after(date, this.fromDate)) {
-      this.toDate = date;
-      this.input.close();
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
-
-    if (this.toDate === null) {
-      parsed += this._parserFormatter.format(this.fromDate) + ' - '
-      this.input.close();
-    }
-    if (this.fromDate) {
-      parsed += this._parserFormatter.format(this.fromDate);
-    }
-    if (this.toDate) {
-      parsed += ' - ' + this._parserFormatter.format(this.toDate);
-    }
-
-    this.renderer.setProperty(this.myRangeInput.nativeElement, 'value', parsed);
-  }
 }

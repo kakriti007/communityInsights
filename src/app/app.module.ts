@@ -25,6 +25,7 @@ import { TreeMapComponent } from './tree-map/tree-map.component';
 import { TagInputModule } from 'ngx-chips';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { HttpClientModule } from '@angular/common/http';
     TagInputModule,
     GraphQLModule,
     HttpClientModule,
+    NgxPaginationModule
   ],
   exports: [],
   providers: [

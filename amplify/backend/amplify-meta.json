@@ -10,6 +10,16 @@
             "StackName": "amplify-newimp-test-162543",
             "StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-test-162543/fd1bbbc0-73a6-11ea-9092-067bcb97a926",
             "AmplifyAppId": "dut8ocpy6bb4j"
+        },
+        "categories": {
+            "api": {
+                "newImpact": {
+                    "rdsRegion": "us-west-2",
+                    "rdsClusterIdentifier": "arn:aws:rds:us-west-2:749571805792:cluster:newimpact-dev",
+                    "rdsSecretStoreArn": "arn:aws:secretsmanager:us-west-2:749571805792:secret:rds-db-credentials/cluster-N5UBIT4Z5XFIM2RXG66EWEC5TI/seanyang-8AyT01",
+                    "rdsDatabaseName": "newimpact"
+                }
+            }
         }
     },
     "api": {
@@ -22,17 +32,21 @@
                     "defaultAuthentication": {
                         "authenticationType": "API_KEY",
                         "apiKeyConfig": {
-                            "description": "test api",
-                            "apiKeyExpirationDays": "365"
+                            "description": "test",
+                            "apiKeyExpirationDays": "7"
                         }
                     }
-                }
+                },
+                "GraphQLAPIIdOutput": "nlnf2gonr5egdkpyzhukm7rhgm",
+                "GraphQLAPIEndpointOutput": "https://is75sk5yqzflroaqvegbewkuai.appsync-api.us-west-2.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-bsobwsfrmbf7thtmw4tbce4x4y"
             },
+            "rdsInit": true,
+            "lastPushTimeStamp": "2020-05-03T20:32:33.849Z",
             "providerMetadata": {
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/api/cloudformation-template.json",
                 "logicalId": "apinewImpact"
-            },
-            "lastPushTimeStamp": "2020-04-02T16:04:09.699Z"
+            }
         },
         "newimpactdata-dev": {
             "service": "AppSync",
@@ -47,9 +61,20 @@
                 "GraphQLAPIEndpointOutput": "https://hv64oxco7naipotbgrduo7lwla.appsync-api.us-west-2.amazonaws.com/graphql",
                 "name": "newimpactdata-dev",
                 "region": "us-west-2",
-                "GraphQLAPIKeyOutput": "da2-krr6uy4gzvdqfciq6is2s6xchu"
+                "GraphQLAPIKeyOutput": "da2-zy5mhx7dlzaxdg4b2gw6vi6wya"
             },
-            "lastPushTimeStamp": "2020-04-01T00:39:47.283Z"
+            "lastPushTimeStamp": "2020-04-30T10:14:12.030Z"
+        }
+    },
+    "hosting": {
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/hosting/template.json",
+                "logicalId": "hostingS3AndCloudFront"
+            },
+            "lastPushTimeStamp": "2020-05-03T20:32:33.867Z"
         }
     }
 }

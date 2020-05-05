@@ -39,6 +39,14 @@ query ListImpactAreas {
     source_ontology
   }
 }
+query ListImpactTree {
+  listImpactTree {
+    tag
+    level2
+    level1
+    level0
+  }
+}
 query GetModelVersion($model_id: Int!) {
   getModelVersion(model_id: $model_id) {
     model_id
@@ -77,5 +85,76 @@ query ListSources {
     source_id
     platform_id
     source_desc
+  }
+}
+query ListTrendingTopics {
+  listTrendingTopics {
+    topic
+    counts
+    n_gram
+    created_time
+  }
+}
+query ListDiscourseHashtags {
+  listDiscourseHashtags {
+    counts
+    hashtag
+  }
+}
+query ListTrendingHashtags($start: String!, $end: String!) {
+  listTrendingHashtags(start: $start, end: $end) {
+    counts
+    hashtag
+    sentiment
+    negative
+    neutral
+    positive
+    start_date
+  }
+}
+query ListTrendingTopicsMaster(
+  $start: String!
+  $end: String!
+  $region: String!
+) {
+  listTrendingTopicsMaster(start: $start, end: $end, region: $region) {
+    topic
+    counts
+    sentiment
+    positive
+    negative
+    neutral
+    created_date
+  }
+}
+query DiscourseTrendingTopics(
+  $start: String!
+  $end: String!
+  $region: String!
+  $topic: String!
+) {
+  discourseTrendingTopics(
+    start: $start
+    end: $end
+    region: $region
+    topic: $topic
+  ) {
+	counts
+  sentiment	
+  topic
+  date
+  }
+}
+query HashtagMaster(
+  $start: String!
+  $end: String!
+  $region: String!
+  $hashtag: String!
+) {
+  hashtagMaster(start: $start, end: $end, region: $region, topic: $topic) {
+    counts
+    sentiment
+    topic
+    date
   }
 }

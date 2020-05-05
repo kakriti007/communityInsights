@@ -1,15 +1,59 @@
 {
-    "providers": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-newimp-test-162543-authRole",
-            "UnauthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-authRole",
-            "Region": "us-west-2",
-            "DeploymentBucketName": "amplify-newimp-test-162543-deployment",
-            "UnauthRoleName": "amplify-newimp-test-162543-unauthRole",
-            "StackName": "amplify-newimp-test-162543",
-            "StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-test-162543/fd1bbbc0-73a6-11ea-9092-067bcb97a926",
-            "AmplifyAppId": "dut8ocpy6bb4j"
-        }
-    }
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-newimp-test-162543-authRole",
+			"UnauthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-test-162543-authRole",
+			"Region": "us-west-2",
+			"DeploymentBucketName": "amplify-newimp-test-162543-deployment",
+			"UnauthRoleName": "amplify-newimp-test-162543-unauthRole",
+			"StackName": "amplify-newimp-test-162543",
+			"StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-test-162543/fd1bbbc0-73a6-11ea-9092-067bcb97a926",
+			"AmplifyAppId": "dut8ocpy6bb4j"
+		}
+	},
+	"api": {
+		"newImpact": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "test",
+							"apiKeyExpirationDays": "36"
+						}
+					}
+				},
+				"GraphQLAPIIdOutput": "nlnf2gonr5egdkpyzhukm7rhgm",
+				"GraphQLAPIEndpointOutput": "https://is75sk5yqzflroaqvegbewkuai.appsync-api.us-west-2.amazonaws.com/graphql",
+				"GraphQLAPIKeyOutput": "da2-bsobwsfrmbf7thtmw4tbce4x4y"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apinewImpact"
+			},
+			"lastPushTimeStamp": "2020-04-09T17:23:19.524Z",
+			"lastPushDirHash": "xvO16wYAVtxWpIAuvPD1CMAOGHs="
+		},
+		"newimpactdata-dev": {
+			"service": "AppSync",
+			"output": {
+				"authConfig": {
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY"
+					},
+					"additionalAuthenticationProviders": null
+				},
+				"GraphQLAPIIdOutput": "cmu5hisxh5fqxpn2wmqlg74cmi",
+				"GraphQLAPIEndpointOutput": "https://hv64oxco7naipotbgrduo7lwla.appsync-api.us-west-2.amazonaws.com/graphql",
+				"name": "newimpactdata-dev",
+				"region": "us-west-2",
+				"GraphQLAPIKeyOutput": "da2-krr6uy4gzvdqfciq6is2s6xchu"
+			},
+			"lastPushTimeStamp": "2020-04-01T00:39:47.283Z"
+		}
+	}
 }

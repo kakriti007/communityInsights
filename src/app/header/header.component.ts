@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgModule, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, NgModule, OnInit, AfterContentInit, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
 import {
   NgbDatepicker,
   NgbInputDatepicker,
@@ -13,6 +13,8 @@ import { NgModel } from "@angular/forms";
 import { TagInputModule } from 'ngx-chips';
 
 import { Subscription } from 'rxjs';
+import { DataTransferService } from '.././data-transfer.service';
+import { map } from 'rxjs/operators';
 
 
 //This is new code for api addition
@@ -34,16 +36,6 @@ import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
 import Amplify, { Auth } from 'aws-amplify';
 import { pluck } from 'rxjs/operators';
 
-// const client = new AWSAppSyncClient({
-//   url: awsmobile.aws_appsync_graphqlEndpoint,
-//   region: awsmobile.aws_appsync_region,
-//   auth: {
-//     type: awsmobile.aws_appsync_authenticationType, // or type: awsconfig.aws_appsync_authenticationType,
-//     apiKey: awsmobile.aws_appsync_apiKey
-//   }
-// });
-//new code ends
-
 const now = new Date();
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -61,20 +53,17 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-
-
+export class HeaderComponent implements OnInit, AfterContentInit {
   
-  impactAreaDatas: [];
+  listImpactAreas= [];
   loading = true;
   error: any;
-
-
-
-
+  test = [];
+  text : any;
   startDate: NgbDateStruct;
   maxDate: NgbDateStruct;
   minDate: NgbDateStruct;
+  initialDate: any;
   hoveredDate: NgbDateStruct;
   fromDate: any;
   toDate: any;
@@ -82,9 +71,10 @@ export class HeaderComponent implements OnInit {
   today = this.calendar.getToday();
   private _subscription: Subscription;
   private _selectSubscription: Subscription;
-  @ViewChild("d") input: NgbInputDatepicker;
-  @ViewChild(NgModel) datePick: NgModel;
-  @ViewChild('myRangeInput') myRangeInput: ElementRef;
+  @ViewChild("d", {static: false}) input: NgbInputDatepicker;
+  @ViewChild(NgModel, {static: false}) datePick: NgModel;
+  @ViewChild('myRangeInput', {static: false}) myRangeInput: ElementRef;
+  
 
   isHovered = date =>
     this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate)
@@ -102,39 +92,67 @@ export class HeaderComponent implements OnInit {
   onTouched: any;
 
 
-  constructor(private apollo: Apollo, element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter, private calendar: NgbCalendar) {}
+  constructor(private data: DataTransferService, private apollo: Apollo, element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter, private calendar: NgbCalendar) {}
+  ngAfterContentInit(): void {
+    this.text = this.calendar.getToday(); 
+    this.getToday(this.text, 'getinitialdate');
+    this.text = this.initialDate;
+    this.updateText(this.text);
+  }
   ngOnInit() {
-
     this.apollo
-      .watchQuery<any>({
+      .query<any>({
         query: gql`
           {
-            getImpactArea {
-              impact_area_id
-              tag
-              source_parent_id
-              impact_parent_id
-              source_ontology
-            }
+              listImpactAreas {
+                tag
+                impact_area_id
+                source_parent_id
+                impact_parent_id
+                source_ontology
+              
+              }
+
           }
         `
-      }).valueChanges.pipe(pluck('data'));
-      // .subscribe(
-      //   ({ data, loading }) => {
-      //     this.impactAreaDatas = data && data.getImpactArea;
-      //     this.loading = loading;
-      //   },
-      //   error => {
-      //     this.loading = false;
-      //     this.error = error;
-      //     console.log(">>>>>>>>", error);
-      //   }
-      // );
-
+      })
+      .subscribe(
+        ({ data, loading }) => {
+          this.listImpactAreas = data;
+          this.loading = loading;
+        },
+        error => {
+          this.loading = false;
+          this.error = error;
+          console.log("error is: ", error);
+        }
+      );
+      
 
     this.startDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
     this.maxDate = { year: now.getFullYear() + 1, month: now.getMonth() + 1, day: now.getDate() };
-    this.minDate = { year: now.getFullYear() - 1, month: now.getMonth() + 1, day: now.getDate() };
+    this.minDate = { year: 2000, month: 1, day: 1 };
+  }
+
+
+  updateText(text) {
+    this.data.updateData(text);
+  }
+
+  getToday(date: NgbDateStruct, initialData){
+    let parsed = '';
+    let fromDate = new Date(date.year + "-" + date.month + "-" + date.day);
+    let time = fromDate.getDay() ? fromDate.getDay() - 1 : 6;
+    fromDate = new Date(fromDate.getTime() - time * 24 * 60 * 60 * 1000);
+    this.fromDate = new NgbDate(
+      fromDate.getFullYear(),
+      fromDate.getMonth() + 1,
+      fromDate.getDate()
+    );
+    parsed += this._parserFormatter.format(this.fromDate) + ' to ' + this._parserFormatter.format(this.fromDate);
+    if(initialData != ''){
+      this.initialDate = parsed;
+    } else this.renderer.setProperty(this.myRangeInput.nativeElement, 'value', parsed);
   }
 
   getWeek(date: NgbDateStruct) {
@@ -155,7 +173,7 @@ export class HeaderComponent implements OnInit {
 
     let weekparsed = '';
     weekparsed += this._parserFormatter.format(this.fromDate);
-    weekparsed += ' - ' + this._parserFormatter.format(this.toDate);
+    weekparsed += ' to ' + this._parserFormatter.format(this.toDate);
     this.renderer.setProperty(this.myRangeInput.nativeElement, 'value', weekparsed);
   }
 
@@ -173,16 +191,15 @@ export class HeaderComponent implements OnInit {
     }
 
     if (this.toDate === null) {
-      parsed += this._parserFormatter.format(this.fromDate) + ' - '
+      parsed += this._parserFormatter.format(this.fromDate) + ' to '
       this.input.close();
     }
     if (this.fromDate) {
       parsed += this._parserFormatter.format(this.fromDate);
     }
     if (this.toDate) {
-      parsed += ' - ' + this._parserFormatter.format(this.toDate);
+      parsed += ' to ' + this._parserFormatter.format(this.toDate);
     }
-
     this.renderer.setProperty(this.myRangeInput.nativeElement, 'value', parsed);
   }
 

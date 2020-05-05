@@ -37,9 +37,9 @@ export class NgbDateFRParserFormatter extends NgbDateParserFormatter {
     format(date: NgbDateStruct): string {
         let stringDate: string = ""; 
         if (date) {
-            stringDate += isNumber(date.month) ? padNumber(date.month) + "/" : "";
-            stringDate += isNumber(date.day) ? padNumber(date.day) + "/" : "";
-            stringDate += date.year;
+            stringDate += date.year +  "-";
+            stringDate += isNumber(date.month) ? padNumber(date.month) + "-" : "";
+            stringDate += isNumber(date.day) ? padNumber(date.day) : "";
         }
         return stringDate;
     }

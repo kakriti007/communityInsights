@@ -1,10 +1,6 @@
 <div *ngIf="loading">
   Loading...
 </div>
-<div *ngFor="let impactAreaData of impactAreaDatas">
-  ---Some Random text to assess if I am getting the data
-  {{impactAreaData}}
-</div>
 
 <div id="top-nav" class="w-100 text-white">
   <div class="navbar p-mobile-0">
@@ -17,7 +13,11 @@
       <div class="col d-flex place-date-choice">
         <div class="inner-wrapper">
           <span>See what people are saying in </span>
-          <tag-input class="d-inline-block" [ngModel]="[]"
+          <tag-input class="d-inline-block" [ngModel]="['Seattle']" [removable]="false" [maxItems]="0"></tag-input>
+
+          <!--This is the actual code to be used when there are multiple places-->
+          <!-- 
+            <tag-input class="d-inline-block" [ngModel]="[]"
                      [placeholder]="'Select Place'"
                      [onTextChangeDebounce]="0"
                      [maxItems]="2"
@@ -26,6 +26,7 @@
             <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="['Seattle', 'Texas', 'Utah']">
             </tag-input-dropdown>
           </tag-input>
+        -->
 
         </div>
        <div class="inner-wrapper mt-1">
@@ -33,16 +34,16 @@
         <form class="form-inline d-inline-block">
           <div class="form-group">
             <div class="input-group">
-              <input #myRangeInput
+              <input #myRangeInput myRangeInput="myRangeInput"
                      class="form-control form-control-sm"
-                     placeholder="mm/dd/yyyy - mm/dd/yyyy"
+                     placeholder="yyyy-mm-dd to yyyy-mm-dd "
                      (click)="d.toggle()"
                      name="dp"
-                     [(ngModel)]="model"
+                     [(value)]="text"
                      [footerTemplate]="footerTemplate"
                      ngbDatepicker
                      [dayTemplate]="t"
-                     [autoClose]="false"
+                     [autoClose]="true"
                      [displayMonths]="2"
                      [maxDate]="maxDate"
                      [minDate]="minDate"
@@ -60,18 +61,19 @@
               </ng-template>
               <ng-template #footerTemplate>
                 <hr class="my-0">
-                <button class="btn btn-primary btn-sm m-2 float-left" (click)="model = today; d.close()">Today</button>
+                <button class="btn btn-primary btn-sm m-2 float-left" (click)="getToday(today, ''); d.close()">Today</button>
                 <button class="btn btn-secondary btn-sm m-2" (click)="getWeek(today); d.close()">This Week</button>
                 <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
               </ng-template>
               <div class="input-group-append">
-                <button class="btn btn-sm btn-outline-light" (click)="d.toggle();  $event.stopPropagation();" (document:click)="d.close()" type="button">
+                <button class="btn btn-sm btn-outline-light" (click)="d.toggle();  $event.stopPropagation();" type="button">
                   <i class="far fa-calendar-alt"></i>
                 </button>
               </div>
             </div>
           </div>
         </form>
+        <button type="button" class="btn btn-sm mx-4" (click)="updateText(myRangeInput.value)">Search</button>
         <!--    <hr /><pre>From: {{ fromDate | json }}</pre><pre>To: {{ toDate | json }}</pre>-->
        </div>
 

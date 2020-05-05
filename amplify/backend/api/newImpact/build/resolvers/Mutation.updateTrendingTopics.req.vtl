@@ -1,0 +1,9 @@
+#set( $updateList = {} )
+#foreach( $entry in $ctx.args.updateTrendingTopicsInput.keySet() )
+  #set( $discard = $updateList.put($entry, "'$ctx.args.updateTrendingTopicsInput[$entry]'") )
+#end
+#set( $update = $updateList.toString().replace("{","").replace("}","") )
+{
+  "version": "2018-05-29",
+  "statements":   ["UPDATE TrendingTopics SET $update WHERE topic=$ctx.args.updateTrendingTopicsInput.topic", "SELECT * FROM TrendingTopics WHERE topic='$ctx.args.updateTrendingTopicsInput.topic'"]
+}

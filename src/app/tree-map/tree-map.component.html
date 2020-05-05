@@ -5,8 +5,8 @@
     </div>
     <div class="controls">
       <select (change)="filterChanged($event.target.value)">
-        <option *ngFor="let type of filterTypes" [value]="type.value">{{type.value}}</option>
-</select>
+        <option *ngFor="let type of filterTypes" [selected]="type.value === defaultView" [value]="type.value">{{type.value}}</option>
+      </select>
 
     </div>
   </div>

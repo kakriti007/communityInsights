@@ -1,15 +1,31 @@
+<ng-container *ngIf="!empty">
 <div class="row">
-  <div class="col-xl-7">
+  <div class="col-xl-12">
     <div class="card-box sweep-to-right">
-      <h4 class="header-title mb-3">Trending Topics</h4>
-      <div id="trending-topics" class="h-350">
-
+      <h4 class="header-title mb-3 d-inline-block">Trending Topics</h4>
+    
+      <div class="d-inline-block pull-right">
+        <button type="button" class="btn-sm btn rounded-0 m-0 switchView" (click)= "getTrendingTopics(); loading=true" [ngClass]="[selectedTopics ? 'selected' : 'notSelected']">Topics</button>
+        <button type="button" class="btn-sm btn rounded-0 m-0 switchView" (click)= "getHashtags();  loading=true" [ngClass]="[selectedTopics ? 'notSelected' : 'selected']">Hashtags</button>
+      </div>
+      <div id="trending-topics" class="h-350 d-flex align-items-center">
+        <div *ngIf="loading" class="loader mx-auto">
+          <img src="/assets/loader.gif">
+        </div>
+        
       </div>
     </div>
   </div>
-  <div class="col-xl-5">
-    <div class="card-box sweep-to-right">
-      <h4 class="header-title mb-3">Sentiment Bifurcation</h4>
+  
+</div>
+
+<div class="row">
+  <div class="col-xl-7">
+    <div class="card-box sweep-to-right" style="padding-bottom: 15px;">
+      <div class="d-flex justify-content-between">
+        <h4 class="header-title mb-3 d-inline-block">Sentiment Bifurcation</h4>
+        <pagination-controls class="hide-page-numbers d-inline-block" directionLinks="true" previousLabel ="" nextLabel ="" (pageChange)="p = $event"></pagination-controls>
+      </div>
       <div class="row h-350">
         <div class="col-xl-12 p-0">
           <table class="table table-hover m-0 table-centered nowrap w-100 sentiment-table" role="grid">
@@ -22,116 +38,47 @@
             </thead>
 
             <tbody>
-              <tr role="row" class="odd">
-                <td tabindex="0" class="d-flex">
-                  <i class="far fa-arrow-alt-circle-up icon-sm pr-2 my-auto"></i>
-                  <b>#1020</b>
-                </td>
-                <td>
-                  A new rating has been received
-                </td>
-                <td>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 40%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </td>
-
-              </tr>
-              <tr role="row" class="even">
-                <td tabindex="0" class="d-flex">
-                  <i class="far fa-arrow-alt-circle-up icon-sm pr-2 my-auto"></i>
-                  <b>#1254</b>
-                </td>
-                <td>
-                  Your application has been received!
-                </td>
-                <td>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </td>
-              </tr>
-              <tr role="row" class="odd">
-                <td class="d-flex" tabindex="0">
-                  <i class="far fa-arrow-alt-circle-up icon-sm pr-2 my-auto"></i>
-                  <b>#2251</b>
-                </td>
-                <td>
-                  Verify your new email address!
-                </td>
-                <td>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </td>
-              </tr>
-              <tr role="row" class="odd">
-                <td class="d-flex" tabindex="0">
-                  <i class="far fa-arrow-alt-circle-up icon-sm pr-2 my-auto"></i>
-                  <b>#2251</b>
-                </td>
-                <td>
-                  Verify your new email address!
-                </td>
-                <td>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </td>
-              </tr>
-              <tr role="row" class="odd">
-                <td class="d-flex" tabindex="0">
-                  <i class="far fa-arrow-alt-circle-up icon-sm pr-2 my-auto"></i>
-                  <b>#2251</b>
-                </td>
-                <td>
-                  Verify your new email address!
-                </td>
-                <td>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </td>
-              </tr>
-              <tr role="row" class="odd">
-                <td class="d-flex" tabindex="0">
-                  <i class="far fa-arrow-alt-circle-up icon-sm pr-2 my-auto"></i>
-                  <b>#2251</b>
-                </td>
-                <td>
-                  Verify your new email address!
-                </td>
-                <td>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </td>
-              </tr>
+              <ng-container *ngIf ="selectedTopics">
+                <tr role="row" class="odd" *ngFor = "let sentimentData of listTrendingTopics | paginate: { itemsPerPage: 8, currentPage: p }" (click)="updateClicked(sentimentData.topic + ' topic')" style="cursor: pointer;">
+                  <td tabindex="0" class="d-flex">
+                    <i class="fas icon-sm pr-2 my-auto {{sentimentData.sentiment == -1 ? 'fa-arrow-circle-down' : sentimentData.sentiment == 0 ? 'fa-minus-circle' : 'fa-arrow-circle-up' }}"></i>
+                    <b>{{sentimentData.counts}}</b>
+                  </td>
+                  <td>
+                    {{sentimentData.topic}}
+                  </td>
+                  <td>
+                    <div class="progress">
+                    <div class="progress-bar bg-danger" ngbTooltip="{{((sentimentData.negative/sentimentData.counts) *100).toFixed(2)}}% Negative" [placement]="['top', 'left']" tooltipClass="smalltooltip" role="progressbar"style="width: {{(sentimentData.negative/sentimentData.counts) *100}}%" aria-valuenow="sentimentData.negative" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar" ngbTooltip="{{((sentimentData.neutral/sentimentData.counts) *100).toFixed(2)}}% Neutral" [placement]="['top', 'left']" tooltipClass="smalltooltip" role="progressbar"style="width: {{(sentimentData.neutral / sentimentData.counts) * 100}}%" aria-valuenow="sentimentData.neutral" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-success" ngbTooltip="{{((sentimentData.positive/sentimentData.counts) *100).toFixed(2)}}% Positive" [placement]="['top', 'left']" tooltipClass="smalltooltip" role="progressbar"style="width: {{(sentimentData.positive/sentimentData.counts)*100}}%" aria-valuemin="sentimentData.positive" aria-valuemax="100"></div>
+                    </div>
+                  </td>
+  
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="!selectedTopics">
+                <tr role="row" class="odd" *ngFor = "let sentimentData of listHashtags | paginate: { itemsPerPage: 8, currentPage: p }" (click)="updateClicked(sentimentData.hashtag + ' hashtag')" style="cursor: pointer;">
+                  <td tabindex="0" class="d-flex">
+                    <i class="fas icon-sm pr-2 my-auto {{sentimentData.sentiment == -1 ? 'fa-arrow-circle-down' : sentimentData.sentiment == 0 ? 'fa-minus-circle' : 'fa-arrow-circle-up' }}"></i>
+                    <b>{{sentimentData.counts}}</b>
+                  </td>
+                  <td>
+                    {{sentimentData.hashtag}}
+                  </td>
+                  <td>
+                    <div class="progress">
+                    <div class="progress-bar bg-danger" ngbTooltip="{{((sentimentData.negative/sentimentData.counts) *100).toFixed(2)}}% Negative" [placement]="['top', 'left']" tooltipClass="smalltooltip" role="progressbar" style="width: {{(sentimentData.negative/sentimentData.counts) *100}}%" aria-valuenow="sentimentData.negative" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar" ngbTooltip="{{((sentimentData.neutral/sentimentData.counts) *100).toFixed(2)}}% Neutral" [placement]="['top', 'left']" role="progressbar" tooltipClass="smalltooltip" style="width: {{(sentimentData.neutral / sentimentData.counts) * 100}}%" aria-valuenow="sentimentData.neutral" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-success" ngbTooltip="{{((sentimentData.positive/sentimentData.counts) *100).toFixed(2)}}% Positive" [placement]="['top', 'left']" tooltipClass="smalltooltip" role="progressbar" style="width: {{(sentimentData.positive/sentimentData.counts)*100}}%" aria-valuemin="sentimentData.positive" aria-valuemax="100"></div>
+                    </div>
+                  </td>
+  
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xl-7">
-    <div class="card-box sweep-to-right">
-      <h4 class="header-title mb-3">Tree Map</h4>
-      <div id="" class="h-350">
-        <app-tree-map></app-tree-map>
       </div>
     </div>
   </div>
@@ -143,5 +90,26 @@
       </div>
     </div>
   </div>
+</div>
+
+</ng-container>
+<ng-container *ngIf="empty">
+  <div class="text-center mt-5 mx-auto px-4">
+    <img class="mb-4 text-center pb-2 " src="/assets/zero_page_icon.svg">
+    <p id="emptySearch"><i class="fas fa-exclamation-circle mx-2"></i> No Data Found. Please Refine your Search</p>
+  </div>
+</ng-container>
+<div class="row">
+  <div class="col-xl-12" >
+    <div class="card-box sweep-to-right">
+      <div class="d-flex justify-content-between">
+        <h4 class="header-title mb-3 d-inline-block">Tree Map</h4>
+      </div>
+      <div id="" class="h-350">
+        <app-tree-map></app-tree-map>
+      </div>
+    </div>
+  </div>
+ 
 </div>
 
