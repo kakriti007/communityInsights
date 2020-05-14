@@ -35,7 +35,10 @@
           shape: false, // It defaults to elliptic shape
           encodeURI: true,
           removeOverflowing: true,
-          autoResize: true,
+          fontSize:  {
+            from: 0.1,
+            to: 0.02
+          }
         };
 
         options = $.extend(default_options, options || {});
@@ -112,7 +115,7 @@
             if (word_array[0].weight > word_array[word_array.length - 1].weight) {
               // Linearly map the original weight to a discrete scale from 1 to 10
               weight = Math.round((word.weight - word_array[word_array.length - 1].weight) /
-                (word_array[0].weight - word_array[word_array.length - 1].weight) * 9.0) + 1;
+                (word_array[0].weight - word_array[word_array.length - 1].weight) * 19.0) + 1;
             }
             word_span = $('<span>').attr(word.html).addClass('w' + weight + " " + custom_class);
 
@@ -239,5 +242,5 @@
     })(jQuery);
 
   </script>
-<script src="runtime-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script><script src="polyfills-es2015.js" type="module"></script><script src="styles-es2015.js" type="module"></script><script src="styles-es5.js" nomodule defer></script><script src="vendor-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule defer></script><script src="main-es2015.js" type="module"></script><script src="main-es5.js" nomodule defer></script></body>
+<script src="runtime-es2015.js" type="module"></script><script src="polyfills-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule></script><script src="polyfills-es5.js" nomodule></script><script src="styles-es2015.js" type="module"></script><script src="styles-es5.js" nomodule></script><script src="vendor-es2015.js" type="module"></script><script src="main-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule></script><script src="main-es5.js" nomodule></script></body>
 </html>
