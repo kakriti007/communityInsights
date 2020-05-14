@@ -71,29 +71,29 @@
 		"apinewImpact": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"Parameters": {
 					"CreateAPIKey": 1,
 					"AppSyncApiName": "newImpact",
 					"DynamoDBBillingMode": "PAY_PER_REQUEST",
 					"DynamoDBEnableServerSideEncryption": "false",
-					"S3DeploymentBucket": "amplify-newimp-test-162543-deployment",
-					"S3DeploymentRootKey": "amplify-appsync-files/4b5d2e8fcbcb1a4bbaacc1595f2ef3a580aed8bf",
+					"S3DeploymentBucket": "amplify-newimp-devtwo-152010-deployment",
+					"S3DeploymentRootKey": "amplify-appsync-files/2b2af29975a8cfe3de7005a9ac27e321313bdc66",
 					"rdsRegion": "us-west-2",
 					"rdsClusterIdentifier": "arn:aws:rds:us-west-2:749571805792:cluster:newimpact-dev",
 					"rdsSecretStoreArn": "arn:aws:secretsmanager:us-west-2:749571805792:secret:rds-db-credentials/cluster-N5UBIT4Z5XFIM2RXG66EWEC5TI/seanyang-8AyT01",
 					"rdsDatabaseName": "newimpact",
-					"env": "test"
+					"env": "devtwo"
 				}
 			}
 		},
 		"hostingS3AndCloudFront": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-newimp-test-162543-deployment/amplify-cfn-templates/hosting/template.json",
+				"TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/hosting/template.json",
 				"Parameters": {
-					"bucketName": "newimpact",
-					"env": "test"
+					"bucketName": "newimpactprojectapi",
+					"env": "devtwo"
 				}
 			}
 		}

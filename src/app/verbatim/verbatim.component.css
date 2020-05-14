@@ -444,3 +444,28 @@ position:relative;
   }
 
 }
+
+.threaded {
+  margin-left: 40px;
+}
+
+.threaded::before {
+  border-top: 1px dashed #ddd;
+  height: 0.5px;
+  content: " ";
+  width: 3.5%;
+  position: absolute;
+  left: -31px;
+  top: 3.0em;
+}
+
+.threaded::after {
+  content: "";
+  border-color: #ddd;
+  position: absolute;
+  left: -30px;
+  height: 120%;
+  border-right: 0;
+  border-style: solid;
+  top: -22px;
+}

@@ -34,5 +34,51 @@
                 }
             }
         }
+    },
+    "try": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-newimp-try-234438-authRole",
+            "UnauthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-try-234438-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-try-234438-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-newimp-try-234438-deployment",
+            "UnauthRoleName": "amplify-newimp-try-234438-unauthRole",
+            "StackName": "amplify-newimp-try-234438",
+            "StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-try-234438/f023e220-8e9b-11ea-87d9-0a134f485a1c",
+            "AmplifyAppId": "d2c912x5cs8l61"
+        },
+        "categories": {
+            "api": {
+                "newImpact": {
+                    "rdsRegion": "us-west-2",
+                    "rdsClusterIdentifier": "arn:aws:rds:us-west-2:749571805792:cluster:newimpact-dev",
+                    "rdsSecretStoreArn": "arn:aws:secretsmanager:us-west-2:749571805792:secret:rds-db-credentials/cluster-N5UBIT4Z5XFIM2RXG66EWEC5TI/seanyang-8AyT01",
+                    "rdsDatabaseName": "newimpact"
+                }
+            }
+        }
+    },
+    "devtwo": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-newimp-devtwo-152010-authRole",
+            "UnauthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-devtwo-152010-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::749571805792:role/amplify-newimp-devtwo-152010-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-newimp-devtwo-152010-deployment",
+            "UnauthRoleName": "amplify-newimp-devtwo-152010-unauthRole",
+            "StackName": "amplify-newimp-devtwo-152010",
+            "StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-devtwo-152010/140b9a10-9631-11ea-ac94-06ac44ac494e",
+            "AmplifyAppId": "d2c912x5cs8l61"
+        },
+        "categories": {
+            "api": {
+                "newImpact": {
+                    "rdsRegion": "us-west-2",
+                    "rdsClusterIdentifier": "arn:aws:rds:us-west-2:749571805792:cluster:newimpact-dev",
+                    "rdsSecretStoreArn": "arn:aws:secretsmanager:us-west-2:749571805792:secret:rds-db-credentials/cluster-N5UBIT4Z5XFIM2RXG66EWEC5TI/seanyang-8AyT01",
+                    "rdsDatabaseName": "newimpact"
+                }
+            }
+        }
     }
 }

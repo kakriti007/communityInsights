@@ -1,13 +1,13 @@
 {
-    "projectName": "newimp",
+    "projectName": "newimpactversion2",
     "version": "3.0",
     "frontend": "javascript",
     "javascript": {
         "framework": "angular",
         "config": {
             "SourceDir": "src",
-            "DistributionDir": "dist",
-            "BuildCommand": "ng build",
+            "DistributionDir": "dist/NewImpact",
+            "BuildCommand": "npm run build",
             "StartCommand": "ng serve"
         }
     },

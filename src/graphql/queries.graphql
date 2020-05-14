@@ -5,9 +5,14 @@ query GetDiscourse($discourse_id: Int!) {
     content
     source_id
     region
-    country_code
     created_time
     imported_time
+    secondary_content
+    isPost
+    post_id
+    ori_id
+    country_code
+    url
   }
 }
 query ListDiscourses {
@@ -16,9 +21,14 @@ query ListDiscourses {
     content
     source_id
     region
-    country_code
     created_time
     imported_time
+    secondary_content
+    isPost
+    post_id
+    ori_id
+    country_code
+    url
   }
 }
 query GetImpactArea($impact_area_id: Int!) {
@@ -39,14 +49,6 @@ query ListImpactAreas {
     source_ontology
   }
 }
-query ListImpactTree {
-  listImpactTree {
-    tag
-    level2
-    level1
-    level0
-  }
-}
 query GetModelVersion($model_id: Int!) {
   getModelVersion(model_id: $model_id) {
     model_id
@@ -65,12 +67,14 @@ query GetPlatform($platform_id: Int!) {
   getPlatform(platform_id: $platform_id) {
     platform_id
     platform_desc
+    platform_type
   }
 }
 query ListPlatforms {
   listPlatforms {
     platform_id
     platform_desc
+    platform_type
   }
 }
 query GetSource($source_id: Int!) {
@@ -78,6 +82,8 @@ query GetSource($source_id: Int!) {
     source_id
     platform_id
     source_desc
+    is_survey
+    region
   }
 }
 query ListSources {
@@ -85,6 +91,16 @@ query ListSources {
     source_id
     platform_id
     source_desc
+    is_survey
+    region
+  }
+}
+query GetTrendingTopics($topic: String!) {
+  getTrendingTopics(topic: $topic) {
+    topic
+    counts
+    n_gram
+    created_time
   }
 }
 query ListTrendingTopics {
@@ -95,51 +111,50 @@ query ListTrendingTopics {
     created_time
   }
 }
-query ListDiscourseHashtags {
-  listDiscourseHashtags {
-    counts
-    hashtag
-  }
-}
-query ListTrendingHashtags($start: String!, $end: String!) {
-  listTrendingHashtags(start: $start, end: $end) {
-    counts
-    hashtag
-    sentiment
-    negative
-    neutral
-    positive
-    start_date
-  }
-}
-query DiscourseTrendingTopics(
-  $start: String!
-  $end: String!
-  $region: String!
-  $topic: String!
-) {
-  discourseTrendingTopics(
-    start: $start
-    end: $end
-    region: $region
-    topic: $topic
-  ) {
-    counts
-    sentiment
+query ListTrendingTopicss {
+  listTrendingTopicss {
     topic
-    date
+    counts
+    n_gram
+    created_time
   }
 }
-query HashtagMaster(
-  $start: String!
-  $end: String!
-  $region: String!
-  $topic: String!
+query ListImpactTree {
+  listImpactTree {
+    tag
+    level0
+    level1
+    level2
+  }
+}
+query GetRegions($region: String!) {
+  getRegions(region: $region) {
+    region
+  }
+}
+query ListRegionss {
+  listRegionss {
+    region
+  }
+}
+query GetTodo($id: ID!) {
+  getTodo(id: $id) {
+    id
+    name
+    description
+  }
+}
+query ListTodos(
+  $filter: ModelTodoFilterInput
+  $limit: Int
+  $nextToken: String
 ) {
-  hashtagMaster(start: $start, end: $end, region: $region, topic: $topic) {
-    counts
-    sentiment
-    topic
-    date
+  listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+    }
+    nextToken
   }
 }

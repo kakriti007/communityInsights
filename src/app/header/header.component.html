@@ -4,16 +4,15 @@
 
 <div id="top-nav" class="w-100 text-white">
   <div class="navbar p-mobile-0">
-    <a href="#" class="">NewImpact</a>
-    <a class="pull-right">Some Text Here</a>
+    <img class="logo" src="/assets/logo.png">
   </div>
   <div class="p-right-80 p-mobile-0">
   <div id="d-block">
     <div class="row">
-      <div class="col d-flex place-date-choice">
-        <div class="inner-wrapper">
+      <div class="col d-md-flex place-date-choice">
+        <div class="inner-wrapper mt-1">
           <span>See what people are saying in </span>
-          <tag-input class="d-inline-block" [ngModel]="['Seattle']" [removable]="false" [maxItems]="0"></tag-input>
+          <tag-input class="d-inline-block" [ngModel]="['King County']" [removable]="false" [maxItems]="0"></tag-input>
 
           <!--This is the actual code to be used when there are multiple places-->
           <!-- 
@@ -30,9 +29,9 @@
 
         </div>
        <div class="inner-wrapper mt-1">
-        <span class="px-2">during</span>
+        <span class="pr-2">during</span>
         <form class="form-inline d-inline-block">
-          <div class="form-group">
+          <div class="form-group my-1">
             <div class="input-group">
               <input #myRangeInput myRangeInput="myRangeInput"
                      class="form-control form-control-sm"
@@ -43,10 +42,11 @@
                      [footerTemplate]="footerTemplate"
                      ngbDatepicker
                      [dayTemplate]="t"
-                     [autoClose]="true"
                      [displayMonths]="2"
                      [maxDate]="maxDate"
                      [minDate]="minDate"
+                     [outsideDays]="outsideDays"
+                     [autoClose]="outside"
                      #d="ngbDatepicker">
 
               <ng-template #t let-date="date" let-focused="focused">
@@ -73,7 +73,7 @@
             </div>
           </div>
         </form>
-        <button type="button" class="btn btn-sm mx-4" (click)="updateText(myRangeInput.value)">Search</button>
+        <button type="button" class="btn btn-sm ml-4" (click)="updateText(myRangeInput.value)"><i class="fas fa-search text-dark"></i></button>
         <!--    <hr /><pre>From: {{ fromDate | json }}</pre><pre>To: {{ toDate | json }}</pre>-->
        </div>
 
@@ -87,19 +87,20 @@
 <div class="wrapper">
   <div class="main-tabs">
     <ngb-tabset [destroyOnHide]="false">
-      <ngb-tab title="Trending">
+      <ngb-tab>
+        <ng-template ngbTabTitle><span class="tabIcons trending-icon"></span><span class="tab-title text-dark" (click)="updateText(myRangeInput.value)">Trending</span></ng-template>
         <ng-template ngbTabContent>
           <app-trending></app-trending>
         </ng-template>
       </ngb-tab>
       <ngb-tab>
-        <ng-template ngbTabTitle>Verbatim</ng-template>
+        <ng-template ngbTabTitle><span class="tabIcons verbatim-icon"></span><span class="tab-title text-dark" (click)="updateText(myRangeInput.value)">Verbatim</span></ng-template>
         <ng-template ngbTabContent>
           <app-verbatim></app-verbatim>
         </ng-template>
       </ngb-tab>
       <ngb-tab>
-        <ng-template ngbTabTitle>About This Tool</ng-template>
+        <ng-template ngbTabTitle><span class="tabIcons about-icon"></span><span class="tab-title text-dark">About This Tool</span></ng-template>
         <ng-template ngbTabContent>
           <p>
             Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.

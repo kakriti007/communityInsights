@@ -1,5 +1,5 @@
 projects:
-  newimpactdata-dev:
+  newImpact:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.graphql
@@ -10,9 +10,6 @@ projects:
         codeGenTarget: angular
         generatedFileName: API.service.ts
         docsFilePath: src/graphql
-        region: us-west-2
-        apiId: cmu5hisxh5fqxpn2wmqlg74cmi
-        maxDepth: 3
 extensions:
   amplify:
     version: 3

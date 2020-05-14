@@ -1,24 +1,3 @@
-.card-box {
-  background-color: #fff;
-  padding: 1.5rem;
-  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
-  margin-bottom: 24px;
-  border-radius: .25rem;
-  transition: 0.3s linear;
-  position: relative;
-  overflow: auto;
-}
-
-.h-350 {
-    height: 350px;
-}
-
-.header-title {
-  font-size: 1rem;
-  margin: 0 0 7px 0;
-}
-
 .sentiment-table td, .sentiment-table th {
   padding: 10px 0px;
   vertical-align: top;
@@ -33,39 +12,6 @@
 .icon-sm {
   font-size: 15px;
 }
-
-.sweep-to-right {
-  position: relative;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-transition: color 1000ms;
-  transition: color 1000ms;
-}
-
-  .sweep-to-right:before {
-    height: 5px;
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #2098d1;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
-    transform-origin: 0 50%;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition: 300ms ease-out;
-    transition: 300ms ease-out;
-  }
-
-  .sweep-to-right:hover:before {
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-  }
   .switchView {
     display: inline-block;
     padding: 3px 12px;
@@ -114,4 +60,30 @@
 
 .smalltooltip .tooltip-inner {
   font-size: 10px !important;
+}
+
+#trending-topics {
+  position: relative;
+}
+
+.zoom-btn {
+  position: absolute;
+  right: 25px;
+  top: 65px;
+}
+
+.sentiment-table tr.active {
+  box-shadow: 0px 3px 21px 0 rgba(44, 41, 84, .48);
+}
+
+.bg-negative {
+  background-color: #4477AA;
+}
+
+.bg-neutral {
+  background-color: #E69F02;
+}
+
+.bg-positive {
+  background-color: #429E73;
 }

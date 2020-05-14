@@ -6,7 +6,8 @@ import {
   NgbCalendar,
   NgbDateAdapter,
   NgbDateParserFormatter,
-  NgbDate
+  NgbDate,
+  NgbDatepickerConfig
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgModel } from "@angular/forms";
 
@@ -19,22 +20,6 @@ import { map } from 'rxjs/operators';
 
 //This is new code for api addition
 import { Observable } from 'rxjs';
-// import { pluck } from 'rxjs/operators';
-
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
-
-import PubSub from '@aws-amplify/pubsub';
-import API from '@aws-amplify/api';
-import awsmobile from '../../aws-exports';
-
-Amplify.configure(awsmobile);
-PubSub.configure(awsmobile)
-
-import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
-
-import Amplify, { Auth } from 'aws-amplify';
-import { pluck } from 'rxjs/operators';
 
 const now = new Date();
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -77,7 +62,7 @@ export class HeaderComponent implements OnInit, AfterContentInit {
   
 
   isHovered = date =>
-    this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate)
+  this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate)
   isInside = date => after(date, this.fromDate) && before(date, this.toDate);
   isFrom = date => equals(date, this.fromDate);
   isTo = date => equals(date, this.toDate);
@@ -92,7 +77,14 @@ export class HeaderComponent implements OnInit, AfterContentInit {
   onTouched: any;
 
 
-  constructor(private data: DataTransferService, private apollo: Apollo, element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter, private calendar: NgbCalendar) {}
+  constructor(private config: NgbDatepickerConfig, private data: DataTransferService, element: ElementRef, private renderer: Renderer2, private _parserFormatter: NgbDateParserFormatter, private calendar: NgbCalendar) {
+    const current = new Date();
+    config.minDate =  { year: 2000, month: 1, day: 1 };
+    this.maxDate = { year: current.getFullYear(), month: current.getMonth(), day: current.getDate() };
+    config.outsideDays = "hidden";
+  }
+  
+  
   ngAfterContentInit(): void {
     this.text = this.calendar.getToday(); 
     this.getToday(this.text, 'getinitialdate');
@@ -100,38 +92,6 @@ export class HeaderComponent implements OnInit, AfterContentInit {
     this.updateText(this.text);
   }
   ngOnInit() {
-    this.apollo
-      .query<any>({
-        query: gql`
-          {
-              listImpactAreas {
-                tag
-                impact_area_id
-                source_parent_id
-                impact_parent_id
-                source_ontology
-              
-              }
-
-          }
-        `
-      })
-      .subscribe(
-        ({ data, loading }) => {
-          this.listImpactAreas = data;
-          this.loading = loading;
-        },
-        error => {
-          this.loading = false;
-          this.error = error;
-          console.log("error is: ", error);
-        }
-      );
-      
-
-    this.startDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-    this.maxDate = { year: now.getFullYear() + 1, month: now.getMonth() + 1, day: now.getDate() };
-    this.minDate = { year: 2000, month: 1, day: 1 };
   }
 
 
@@ -142,17 +102,26 @@ export class HeaderComponent implements OnInit, AfterContentInit {
   getToday(date: NgbDateStruct, initialData){
     let parsed = '';
     let fromDate = new Date(date.year + "-" + date.month + "-" + date.day);
-    let time = fromDate.getDay() ? fromDate.getDay() - 1 : 6;
+    let time = fromDate.getDay() ? fromDate.getDay() - 2 : 6;
     fromDate = new Date(fromDate.getTime() - time * 24 * 60 * 60 * 1000);
     this.fromDate = new NgbDate(
       fromDate.getFullYear(),
       fromDate.getMonth() + 1,
       fromDate.getDate()
     );
-    parsed += this._parserFormatter.format(this.fromDate) + ' to ' + this._parserFormatter.format(this.fromDate);
+
+    const toDate = new Date(fromDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+    this.toDate = new NgbDate(
+      toDate.getFullYear(),
+      toDate.getMonth() + 1,
+      toDate.getDate()
+    );
+    
+    parsed += this._parserFormatter.format(this.toDate) + ' to ' + this._parserFormatter.format(this.fromDate);
     if(initialData != ''){
       this.initialDate = parsed;
-    } else this.renderer.setProperty(this.myRangeInput.nativeElement, 'value', parsed);
+    } else 
+    this.renderer.setProperty(this.myRangeInput.nativeElement, 'value', parsed);
   }
 
   getWeek(date: NgbDateStruct) {
@@ -192,7 +161,6 @@ export class HeaderComponent implements OnInit, AfterContentInit {
 
     if (this.toDate === null) {
       parsed += this._parserFormatter.format(this.fromDate) + ' to '
-      this.input.close();
     }
     if (this.fromDate) {
       parsed += this._parserFormatter.format(this.fromDate);

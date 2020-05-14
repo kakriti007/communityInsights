@@ -5,9 +5,14 @@ subscription OnCreateDiscourse {
     content
     source_id
     region
-    country_code
     created_time
     imported_time
+    secondary_content
+    isPost
+    post_id
+    ori_id
+    country_code
+    url
   }
 }
 subscription OnCreateImpactArea {
@@ -30,6 +35,7 @@ subscription OnCreatePlatform {
   onCreatePlatform {
     platform_id
     platform_desc
+    platform_type
   }
 }
 subscription OnCreateSource {
@@ -37,5 +43,41 @@ subscription OnCreateSource {
     source_id
     platform_id
     source_desc
+    is_survey
+    region
+  }
+}
+subscription OnCreateTrendingTopics {
+  onCreateTrendingTopics {
+    topic
+    counts
+    n_gram
+    created_time
+  }
+}
+subscription OnCreateRegions {
+  onCreateRegions {
+    region
+  }
+}
+subscription OnCreateTodo {
+  onCreateTodo {
+    id
+    name
+    description
+  }
+}
+subscription OnUpdateTodo {
+  onUpdateTodo {
+    id
+    name
+    description
+  }
+}
+subscription OnDeleteTodo {
+  onDeleteTodo {
+    id
+    name
+    description
   }
 }

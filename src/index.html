@@ -34,7 +34,11 @@
           delayedMode: word_array.length > 50,
           shape: false, // It defaults to elliptic shape
           encodeURI: true,
-          removeOverflowing: true
+          removeOverflowing: true,
+          fontSize:  {
+            from: 0.1,
+            to: 0.02
+          }
         };
 
         options = $.extend(default_options, options || {});
@@ -111,7 +115,7 @@
             if (word_array[0].weight > word_array[word_array.length - 1].weight) {
               // Linearly map the original weight to a discrete scale from 1 to 10
               weight = Math.round((word.weight - word_array[word_array.length - 1].weight) /
-                (word_array[0].weight - word_array[word_array.length - 1].weight) * 9.0) + 1;
+                (word_array[0].weight - word_array[word_array.length - 1].weight) * 19.0) + 1;
             }
             word_span = $('<span>').attr(word.html).addClass('w' + weight + " " + custom_class);
 

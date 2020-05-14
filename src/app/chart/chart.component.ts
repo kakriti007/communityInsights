@@ -36,22 +36,46 @@ export class ChartComponent implements OnInit {
   hashtagChart = [];
   constructor(private data: DataTransferService, private apollo: Apollo) { }
 
-  assignColor: (d: any) => void;
 
 
   plotChart (chartData){
-    function assignColor(d) {
-      if (d === 1) return "green";
-      if (d === 0) return "goldenrod";
-      if (d === -1) return "red";
-      return "grey";
-    }
+  document.getElementById('chart').innerHTML='';
+
+  function legendtext(d) {
+    if (d === -1) return "Negative";
+    if (d === 0) return "Neutral";
+    if (d === 1) return "Positive";
+  }
+
+  function assignColor(d) {
+    if (d === -1) return "#4477AA";
+    if (d === 0) return "#E69F02";
+    if (d === 1) return "#429E73";
+    return "grey";
+  }
+
   new d3plus.LinePlot()
   .config({
     data: chartData,
     groupBy: "sentiment",
     x: "date",
     y: "counts",
+    lineMarkers: true,
+    lineMarkerConfig: {
+      fill: "red"
+    },
+    legendConfig: {
+      label: function (d) {
+        return legendtext(d.sentiment);
+      }
+    },
+    shapeConfig: {
+      Line: {
+        stroke: function(d) {
+          return assignColor(d.sentiment);
+        }
+      }
+    },
     xConfig: {
       title: "Dates",
       labels: [],
@@ -61,15 +85,19 @@ export class ChartComponent implements OnInit {
     },
     tooltipConfig: {
       title: function(d) {
-        return "Sentiment Count:" + d["counts"];
+        var a = d.sentiment === -1 ? 'Negative' : d.sentiment === 0 ? 'Neutral' : 'Positive';
+        return "Sentiment Count - " +  d["counts"] + ' ' + a ;
       },
       tbody: [
         ["Date: ", function(d) { return d["date"]}]
       ]
     },
+    timeline:"date",
     select: "#chart",
   })
+
   .render();
+  this.empty = false;
   }
 
   ngOnInit() {
@@ -112,19 +140,17 @@ export class ChartComponent implements OnInit {
         start: this.start,
         end: this.end,
         region: "King County",
-        topic: this.selectedData
+        topic:  this.searchValue
       }
     })
     .subscribe(
       ({ data, loading }) => {
         this.topicsChart = data && data.discourseTrendingTopics;
+        this.plotChart(this.topicsChart);
       },error => {
         console.log("error is: ", error);
       }
-    ).add(() => {
-      this.empty = false;
-       this.plotChart(this.topicsChart);
-    });
+    );
   }
 
   getHashtagsChart (){
@@ -151,13 +177,10 @@ export class ChartComponent implements OnInit {
     .subscribe(
       ({ data, loading }) => {
         this.hashtagChart = data && data.hashtagMaster;
+        this.plotChart(this.hashtagChart);
       },error => {
         console.log("error is: ", error);
       }
-    ).add(() => {
-      this.empty = false;
-       this.plotChart(this.hashtagChart);
-    })
-
+    )
   }
 }

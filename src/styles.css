@@ -1,8 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: latoBold;
+  src: url('/assets/Lato-Bold.woff');
+}
+@font-face {
+  font-family: latoBoldItalic;
+  src: url('/assets/Lato-BoldItalic.woff');
+}
+@font-face {
+  font-family: latoItalic;
+  src: url('/assets/Lato-Italic.woff');
+}
+@font-face {
+  font-family: lato;
+  src: url('/assets/Lato-Regular.woff');
+}
+
 body {
     margin: 0px;
     background-color: #fafafa;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif, lato;
   }
   ::-webkit-scrollbar {
     width: 12px;
@@ -42,12 +59,18 @@ body {
     padding: 0px 75px;
     position: relative !important;
     width: 100%;
-    padding: 55px 0px 0px 80px;
+    padding: 50px 0px 0px 80px
   }
   .nav-tabs > li:last-of-type > a {
     margin-right: 0;
     position: absolute;
     right: 0;
+  }
+
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #fff !important;
+    background-color: #4477aa !important;
+    border: none !important;
   }
   
   .tab-pane.active {
@@ -59,6 +82,25 @@ body {
     position: relative;
     padding: 20px 80px;
   }
+
+  .nav-tabs .nav-item {
+    text-align: center;
+  }
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active .tab-title {
+    color: #fff!important;
+}
+  
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active .trending-icon {
+  background-image: url("/assets/trending_white.svg") !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active .verbatim-icon {
+  background-image: url("/assets/verbatim_white.svg") !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active .about-icon {
+  background-image: url("/assets/about_white.svg") !important;
+}
+
   
   .p-right-80 {
       padding: 0px 80px;
@@ -67,16 +109,23 @@ body {
   
   @media (max-width: 1024px) {
    .p-mobile-0 {
-       padding: 0px !important;
+       padding: 0px 20px !important;
    }
-    .nav-tabs {
-      padding: 100px 0px 0px 0px !important;
-    }
-  
     .tab-pane.active{
         padding: 20px;
     }
   }
+
+  @media (max-width: 767px) {
+    .nav-tabs {
+    padding: 90px 0px 0px 0px !important;
+  }
+}
+@media (max-width: 369px) {
+    .nav-tabs {
+    padding: 130px 0px 0px 0px !important;
+  }
+}
   
   /*Tag Cloud CSS Starts*/
   /* fonts */
@@ -92,21 +141,61 @@ body {
       font-size: inherit;
       text-decoration: none;
     }
-  
-    div.jqcloud span.w10 {
-      font-size: 550%;
+
+    div.jqcloud span.w20 {
+      font-size: 600%;
+    }
+
+    div.jqcloud span.w19 {
+      font-size: 600%;
+    }
+
+    div.jqcloud span.w18 {
+      font-size: 600%;
+    }
+
+    div.jqcloud span.w17 {
+      font-size: 575%;
     }
   
-    div.jqcloud span.w9 {
+    div.jqcloud span.w16 {
+      font-size: 575%;
+    }
+
+    div.jqcloud span.w15 {
+      font-size: 575%;
+    }
+
+    div.jqcloud span.w14 {
+      font-size: 550%;
+    }
+
+    div.jqcloud span.w13 {
+      font-size: 525%;
+    }
+
+    div.jqcloud span.w12 {
       font-size: 500%;
+    }
+
+    div.jqcloud span.w11 {
+      font-size: 475%;
+    }
+
+    div.jqcloud span.w10 {
+      font-size: 450%;
+    }
+
+    div.jqcloud span.w9 {
+      font-size: 425%;
     }
   
     div.jqcloud span.w8 {
-      font-size: 450%;
+      font-size: 400%;
     }
   
     div.jqcloud span.w7 {
-      font-size: 400%;
+      font-size: 375%;
     }
   
     div.jqcloud span.w6 {
@@ -114,11 +203,11 @@ body {
     }
   
     div.jqcloud span.w5 {
-      font-size: 300%;
+      font-size: 325%;
     }
   
     div.jqcloud span.w4 {
-      font-size: 250%;
+      font-size: 300%;
     }
   
     div.jqcloud span.w3 {
@@ -325,3 +414,73 @@ body {
     margin-left: 0.5rem;
     font-weight: 900;
 }
+
+.header-title {
+  font-size: 1rem;
+  margin: 0 0 7px 0;
+}
+
+.card-box {
+  background-color: #fff;
+  padding: 1.5rem;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+  margin-bottom: 24px;
+  border-radius: .25rem;
+  transition: 0.3s linear;
+  position: relative;
+  overflow: auto;
+}
+
+.h-350 {
+  height: 350px;
+}
+
+.sweep-to-right {
+  position: relative;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: color 1000ms;
+  transition: color 1000ms;
+}
+
+  .sweep-to-right:before {
+    height: 5px;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #2098d1;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition: 300ms ease-out;
+    transition: 300ms ease-out;
+  }
+
+  .sweep-to-right:hover:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+
+  .z-index-1 {
+    z-index: 1;
+  }
+
+
+  @media (max-width: 1024px) {
+    .ngb-dp-months {
+      display: flex !important;
+      overflow-x: scroll !important;
+      width: 245px !important;
+    }  
+}
+  
+  
+ 

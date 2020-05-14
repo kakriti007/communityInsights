@@ -6,14 +6,34 @@ import API, { graphqlOperation } from "@aws-amplify/api";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import * as Observable from "zen-observable";
 
+export type CreateDiscourseInput = {
+  discourse_id: number;
+  content?: string | null;
+  source_id?: number | null;
+  region?: string | null;
+  created_time?: string | null;
+  imported_time?: string | null;
+  secondary_content?: string | null;
+  isPost?: number | null;
+  post_id?: number | null;
+  ori_id?: string | null;
+  country_code?: string | null;
+  url?: string | null;
+};
+
 export type UpdateDiscourseInput = {
   discourse_id: number;
   content?: string | null;
   source_id?: number | null;
   region?: string | null;
-  country_code?: number | null;
   created_time?: string | null;
   imported_time?: string | null;
+  secondary_content?: string | null;
+  isPost?: number | null;
+  post_id?: number | null;
+  ori_id?: string | null;
+  country_code?: string | null;
+  url?: string | null;
 };
 
 export type CreateImpactAreaInput = {
@@ -47,23 +67,139 @@ export type UpdateModelVersionInput = {
 export type CreatePlatformInput = {
   platform_id: number;
   platform_desc?: string | null;
+  platform_type?: string | null;
 };
 
 export type UpdatePlatformInput = {
   platform_id: number;
   platform_desc?: string | null;
+  platform_type?: string | null;
 };
 
 export type CreateSourceInput = {
   source_id: number;
   platform_id?: number | null;
   source_desc?: string | null;
+  is_survey?: number | null;
+  region?: string | null;
 };
 
 export type UpdateSourceInput = {
   source_id: number;
   platform_id?: number | null;
   source_desc?: string | null;
+  is_survey?: number | null;
+  region?: string | null;
+};
+
+export type CreateTrendingTopicsInput = {
+  topic: string;
+  counts?: number | null;
+  n_gram?: number | null;
+  created_time?: string | null;
+};
+
+export type UpdateTrendingTopicsInput = {
+  topic: string;
+  counts?: number | null;
+  n_gram?: number | null;
+  created_time?: string | null;
+};
+
+export type CreateRegionsInput = {
+  region: string;
+};
+
+export type UpdateRegionsInput = {
+  region: string;
+};
+
+export type CreateTodoInput = {
+  id?: string | null;
+  name: string;
+  description?: string | null;
+};
+
+export type ModelTodoConditionInput = {
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  and?: Array<ModelTodoConditionInput | null> | null;
+  or?: Array<ModelTodoConditionInput | null> | null;
+  not?: ModelTodoConditionInput | null;
+};
+
+export type ModelStringInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null"
+}
+
+export type ModelSizeInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+};
+
+export type UpdateTodoInput = {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+};
+
+export type DeleteTodoInput = {
+  id?: string | null;
+};
+
+export type ModelTodoFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  and?: Array<ModelTodoFilterInput | null> | null;
+  or?: Array<ModelTodoFilterInput | null> | null;
+  not?: ModelTodoFilterInput | null;
+};
+
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
 };
 
 export type DeleteDiscourseMutation = {
@@ -72,9 +208,30 @@ export type DeleteDiscourseMutation = {
   content: string | null;
   source_id: number | null;
   region: string | null;
-  country_code: number | null;
   created_time: string | null;
   imported_time: string | null;
+  secondary_content: string | null;
+  isPost: number | null;
+  post_id: number | null;
+  ori_id: string | null;
+  country_code: string | null;
+  url: string | null;
+};
+
+export type CreateDiscourseMutation = {
+  __typename: "Discourse";
+  discourse_id: number;
+  content: string | null;
+  source_id: number | null;
+  region: string | null;
+  created_time: string | null;
+  imported_time: string | null;
+  secondary_content: string | null;
+  isPost: number | null;
+  post_id: number | null;
+  ori_id: string | null;
+  country_code: string | null;
+  url: string | null;
 };
 
 export type UpdateDiscourseMutation = {
@@ -83,9 +240,14 @@ export type UpdateDiscourseMutation = {
   content: string | null;
   source_id: number | null;
   region: string | null;
-  country_code: number | null;
   created_time: string | null;
   imported_time: string | null;
+  secondary_content: string | null;
+  isPost: number | null;
+  post_id: number | null;
+  ori_id: string | null;
+  country_code: string | null;
+  url: string | null;
 };
 
 export type DeleteImpactAreaMutation = {
@@ -140,18 +302,21 @@ export type DeletePlatformMutation = {
   __typename: "Platform";
   platform_id: number;
   platform_desc: string | null;
+  platform_type: string | null;
 };
 
 export type CreatePlatformMutation = {
   __typename: "Platform";
   platform_id: number;
   platform_desc: string | null;
+  platform_type: string | null;
 };
 
 export type UpdatePlatformMutation = {
   __typename: "Platform";
   platform_id: number;
   platform_desc: string | null;
+  platform_type: string | null;
 };
 
 export type DeleteSourceMutation = {
@@ -159,6 +324,8 @@ export type DeleteSourceMutation = {
   source_id: number;
   platform_id: number | null;
   source_desc: string | null;
+  is_survey: number | null;
+  region: string | null;
 };
 
 export type CreateSourceMutation = {
@@ -166,6 +333,8 @@ export type CreateSourceMutation = {
   source_id: number;
   platform_id: number | null;
   source_desc: string | null;
+  is_survey: number | null;
+  region: string | null;
 };
 
 export type UpdateSourceMutation = {
@@ -173,6 +342,68 @@ export type UpdateSourceMutation = {
   source_id: number;
   platform_id: number | null;
   source_desc: string | null;
+  is_survey: number | null;
+  region: string | null;
+};
+
+export type DeleteTrendingTopicsMutation = {
+  __typename: "TrendingTopics";
+  topic: string;
+  counts: number | null;
+  n_gram: number | null;
+  created_time: string | null;
+};
+
+export type CreateTrendingTopicsMutation = {
+  __typename: "TrendingTopics";
+  topic: string;
+  counts: number | null;
+  n_gram: number | null;
+  created_time: string | null;
+};
+
+export type UpdateTrendingTopicsMutation = {
+  __typename: "TrendingTopics";
+  topic: string;
+  counts: number | null;
+  n_gram: number | null;
+  created_time: string | null;
+};
+
+export type DeleteRegionsMutation = {
+  __typename: "Regions";
+  region: string;
+};
+
+export type CreateRegionsMutation = {
+  __typename: "Regions";
+  region: string;
+};
+
+export type UpdateRegionsMutation = {
+  __typename: "Regions";
+  region: string;
+};
+
+export type CreateTodoMutation = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
+};
+
+export type UpdateTodoMutation = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
+};
+
+export type DeleteTodoMutation = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
 };
 
 export type GetDiscourseQuery = {
@@ -181,9 +412,14 @@ export type GetDiscourseQuery = {
   content: string | null;
   source_id: number | null;
   region: string | null;
-  country_code: number | null;
   created_time: string | null;
   imported_time: string | null;
+  secondary_content: string | null;
+  isPost: number | null;
+  post_id: number | null;
+  ori_id: string | null;
+  country_code: string | null;
+  url: string | null;
 };
 
 export type ListDiscoursesQuery = {
@@ -192,9 +428,14 @@ export type ListDiscoursesQuery = {
   content: string | null;
   source_id: number | null;
   region: string | null;
-  country_code: number | null;
   created_time: string | null;
   imported_time: string | null;
+  secondary_content: string | null;
+  isPost: number | null;
+  post_id: number | null;
+  ori_id: string | null;
+  country_code: string | null;
+  url: string | null;
 };
 
 export type GetImpactAreaQuery = {
@@ -215,14 +456,6 @@ export type ListImpactAreasQuery = {
   source_ontology: string | null;
 };
 
-export type ListImpactTreeQuery = {
-  __typename: "ImpactTree";
-  tag: string | null;
-  level2: string | null;
-  level1: string | null;
-  level0: string | null;
-};
-
 export type GetModelVersionQuery = {
   __typename: "ModelVersion";
   model_id: number;
@@ -241,12 +474,14 @@ export type GetPlatformQuery = {
   __typename: "Platform";
   platform_id: number;
   platform_desc: string | null;
+  platform_type: string | null;
 };
 
 export type ListPlatformsQuery = {
   __typename: "Platform";
   platform_id: number;
   platform_desc: string | null;
+  platform_type: string | null;
 };
 
 export type GetSourceQuery = {
@@ -254,6 +489,8 @@ export type GetSourceQuery = {
   source_id: number;
   platform_id: number | null;
   source_desc: string | null;
+  is_survey: number | null;
+  region: string | null;
 };
 
 export type ListSourcesQuery = {
@@ -261,47 +498,68 @@ export type ListSourcesQuery = {
   source_id: number;
   platform_id: number | null;
   source_desc: string | null;
+  is_survey: number | null;
+  region: string | null;
+};
+
+export type GetTrendingTopicsQuery = {
+  __typename: "TrendingTopics";
+  topic: string;
+  counts: number | null;
+  n_gram: number | null;
+  created_time: string | null;
 };
 
 export type ListTrendingTopicsQuery = {
   __typename: "TrendingTopics";
-  topic: string | null;
-  counts: number;
-  n_gram: number;
+  topic: string;
+  counts: number | null;
+  n_gram: number | null;
   created_time: string | null;
 };
 
-export type ListDiscourseHashtagsQuery = {
-  __typename: "DiscourseHashtags";
-  counts: number | null;
-  hashtag: string;
-};
-
-export type ListTrendingHashtagsQuery = {
-  __typename: "listTrendingHashtags";
-  counts: number | null;
-  hashtag: string;
-  sentiment: number | null;
-  negative: number | null;
-  neutral: number | null;
-  positive: number | null;
-  start_date: string | null;
-};
-
-export type DiscourseTrendingTopicsQuery = {
-  __typename: "discourseTrendingTopics";
-  counts: number | null;
-  sentiment: number | null;
+export type ListTrendingTopicssQuery = {
+  __typename: "TrendingTopics";
   topic: string;
-  date: string | null;
+  counts: number | null;
+  n_gram: number | null;
+  created_time: string | null;
 };
 
-export type HashtagMasterQuery = {
-  __typename: "hashtagMaster";
-  counts: number | null;
-  sentiment: number | null;
-  topic: string;
-  date: string | null;
+export type ListImpactTreeQuery = {
+  __typename: "ImpactTree";
+  tag: string;
+  level0: string;
+  level1: string;
+  level2: string;
+};
+
+export type GetRegionsQuery = {
+  __typename: "Regions";
+  region: string;
+};
+
+export type ListRegionssQuery = {
+  __typename: "Regions";
+  region: string;
+};
+
+export type GetTodoQuery = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
+};
+
+export type ListTodosQuery = {
+  __typename: "ModelTodoConnection";
+  items: Array<{
+    __typename: "Todo";
+    id: string;
+    name: string;
+    description: string | null;
+  } | null> | null;
+  nextToken: string | null;
 };
 
 export type OnCreateDiscourseSubscription = {
@@ -310,9 +568,14 @@ export type OnCreateDiscourseSubscription = {
   content: string | null;
   source_id: number | null;
   region: string | null;
-  country_code: number | null;
   created_time: string | null;
   imported_time: string | null;
+  secondary_content: string | null;
+  isPost: number | null;
+  post_id: number | null;
+  ori_id: string | null;
+  country_code: string | null;
+  url: string | null;
 };
 
 export type OnCreateImpactAreaSubscription = {
@@ -335,6 +598,7 @@ export type OnCreatePlatformSubscription = {
   __typename: "Platform";
   platform_id: number;
   platform_desc: string | null;
+  platform_type: string | null;
 };
 
 export type OnCreateSourceSubscription = {
@@ -342,6 +606,42 @@ export type OnCreateSourceSubscription = {
   source_id: number;
   platform_id: number | null;
   source_desc: string | null;
+  is_survey: number | null;
+  region: string | null;
+};
+
+export type OnCreateTrendingTopicsSubscription = {
+  __typename: "TrendingTopics";
+  topic: string;
+  counts: number | null;
+  n_gram: number | null;
+  created_time: string | null;
+};
+
+export type OnCreateRegionsSubscription = {
+  __typename: "Regions";
+  region: string;
+};
+
+export type OnCreateTodoSubscription = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
+};
+
+export type OnUpdateTodoSubscription = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
+};
+
+export type OnDeleteTodoSubscription = {
+  __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
 };
 
 @Injectable({
@@ -358,9 +658,14 @@ export class APIService {
           content
           source_id
           region
-          country_code
           created_time
           imported_time
+          secondary_content
+          isPost
+          post_id
+          ori_id
+          country_code
+          url
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -370,6 +675,34 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteDiscourseMutation>response.data.deleteDiscourse;
+  }
+  async CreateDiscourse(
+    createDiscourseInput: CreateDiscourseInput
+  ): Promise<CreateDiscourseMutation> {
+    const statement = `mutation CreateDiscourse($createDiscourseInput: CreateDiscourseInput!) {
+        createDiscourse(createDiscourseInput: $createDiscourseInput) {
+          __typename
+          discourse_id
+          content
+          source_id
+          region
+          created_time
+          imported_time
+          secondary_content
+          isPost
+          post_id
+          ori_id
+          country_code
+          url
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      createDiscourseInput
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateDiscourseMutation>response.data.createDiscourse;
   }
   async UpdateDiscourse(
     updateDiscourseInput: UpdateDiscourseInput
@@ -381,9 +714,14 @@ export class APIService {
           content
           source_id
           region
-          country_code
           created_time
           imported_time
+          secondary_content
+          isPost
+          post_id
+          ori_id
+          country_code
+          url
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -520,6 +858,7 @@ export class APIService {
           __typename
           platform_id
           platform_desc
+          platform_type
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -538,6 +877,7 @@ export class APIService {
           __typename
           platform_id
           platform_desc
+          platform_type
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -556,6 +896,7 @@ export class APIService {
           __typename
           platform_id
           platform_desc
+          platform_type
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -573,6 +914,8 @@ export class APIService {
           source_id
           platform_id
           source_desc
+          is_survey
+          region
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -592,6 +935,8 @@ export class APIService {
           source_id
           platform_id
           source_desc
+          is_survey
+          region
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -611,6 +956,8 @@ export class APIService {
           source_id
           platform_id
           source_desc
+          is_survey
+          region
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -621,6 +968,184 @@ export class APIService {
     )) as any;
     return <UpdateSourceMutation>response.data.updateSource;
   }
+  async DeleteTrendingTopics(
+    topic: string
+  ): Promise<DeleteTrendingTopicsMutation> {
+    const statement = `mutation DeleteTrendingTopics($topic: String!) {
+        deleteTrendingTopics(topic: $topic) {
+          __typename
+          topic
+          counts
+          n_gram
+          created_time
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      topic
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTrendingTopicsMutation>response.data.deleteTrendingTopics;
+  }
+  async CreateTrendingTopics(
+    createTrendingTopicsInput: CreateTrendingTopicsInput
+  ): Promise<CreateTrendingTopicsMutation> {
+    const statement = `mutation CreateTrendingTopics($createTrendingTopicsInput: CreateTrendingTopicsInput!) {
+        createTrendingTopics(createTrendingTopicsInput: $createTrendingTopicsInput) {
+          __typename
+          topic
+          counts
+          n_gram
+          created_time
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      createTrendingTopicsInput
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTrendingTopicsMutation>response.data.createTrendingTopics;
+  }
+  async UpdateTrendingTopics(
+    updateTrendingTopicsInput: UpdateTrendingTopicsInput
+  ): Promise<UpdateTrendingTopicsMutation> {
+    const statement = `mutation UpdateTrendingTopics($updateTrendingTopicsInput: UpdateTrendingTopicsInput!) {
+        updateTrendingTopics(updateTrendingTopicsInput: $updateTrendingTopicsInput) {
+          __typename
+          topic
+          counts
+          n_gram
+          created_time
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      updateTrendingTopicsInput
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateTrendingTopicsMutation>response.data.updateTrendingTopics;
+  }
+  async DeleteRegions(region: string): Promise<DeleteRegionsMutation> {
+    const statement = `mutation DeleteRegions($region: String!) {
+        deleteRegions(region: $region) {
+          __typename
+          region
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      region
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteRegionsMutation>response.data.deleteRegions;
+  }
+  async CreateRegions(
+    createRegionsInput: CreateRegionsInput
+  ): Promise<CreateRegionsMutation> {
+    const statement = `mutation CreateRegions($createRegionsInput: CreateRegionsInput!) {
+        createRegions(createRegionsInput: $createRegionsInput) {
+          __typename
+          region
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      createRegionsInput
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateRegionsMutation>response.data.createRegions;
+  }
+  async UpdateRegions(
+    updateRegionsInput: UpdateRegionsInput
+  ): Promise<UpdateRegionsMutation> {
+    const statement = `mutation UpdateRegions($updateRegionsInput: UpdateRegionsInput!) {
+        updateRegions(updateRegionsInput: $updateRegionsInput) {
+          __typename
+          region
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      updateRegionsInput
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateRegionsMutation>response.data.updateRegions;
+  }
+  async CreateTodo(
+    input: CreateTodoInput,
+    condition?: ModelTodoConditionInput
+  ): Promise<CreateTodoMutation> {
+    const statement = `mutation CreateTodo($input: CreateTodoInput!, $condition: ModelTodoConditionInput) {
+        createTodo(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTodoMutation>response.data.createTodo;
+  }
+  async UpdateTodo(
+    input: UpdateTodoInput,
+    condition?: ModelTodoConditionInput
+  ): Promise<UpdateTodoMutation> {
+    const statement = `mutation UpdateTodo($input: UpdateTodoInput!, $condition: ModelTodoConditionInput) {
+        updateTodo(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateTodoMutation>response.data.updateTodo;
+  }
+  async DeleteTodo(
+    input: DeleteTodoInput,
+    condition?: ModelTodoConditionInput
+  ): Promise<DeleteTodoMutation> {
+    const statement = `mutation DeleteTodo($input: DeleteTodoInput!, $condition: ModelTodoConditionInput) {
+        deleteTodo(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTodoMutation>response.data.deleteTodo;
+  }
   async GetDiscourse(discourse_id: number): Promise<GetDiscourseQuery> {
     const statement = `query GetDiscourse($discourse_id: Int!) {
         getDiscourse(discourse_id: $discourse_id) {
@@ -629,9 +1154,14 @@ export class APIService {
           content
           source_id
           region
-          country_code
           created_time
           imported_time
+          secondary_content
+          isPost
+          post_id
+          ori_id
+          country_code
+          url
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -650,9 +1180,14 @@ export class APIService {
           content
           source_id
           region
-          country_code
           created_time
           imported_time
+          secondary_content
+          isPost
+          post_id
+          ori_id
+          country_code
+          url
         }
       }`;
     const response = (await API.graphql(graphqlOperation(statement))) as any;
@@ -691,19 +1226,6 @@ export class APIService {
     const response = (await API.graphql(graphqlOperation(statement))) as any;
     return <Array<ListImpactAreasQuery>>response.data.listImpactAreas;
   }
-  async ListImpactTree(): Promise<Array<ListImpactTreeQuery>> {
-    const statement = `query ListImpactTree {
-        listImpactTree {
-          __typename
-          tag
-          level2
-          level1
-          level0
-        }
-      }`;
-    const response = (await API.graphql(graphqlOperation(statement))) as any;
-    return <Array<ListImpactTreeQuery>>response.data.listImpactTree;
-  }
   async GetModelVersion(model_id: number): Promise<GetModelVersionQuery> {
     const statement = `query GetModelVersion($model_id: Int!) {
         getModelVersion(model_id: $model_id) {
@@ -739,6 +1261,7 @@ export class APIService {
           __typename
           platform_id
           platform_desc
+          platform_type
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -755,6 +1278,7 @@ export class APIService {
           __typename
           platform_id
           platform_desc
+          platform_type
         }
       }`;
     const response = (await API.graphql(graphqlOperation(statement))) as any;
@@ -767,6 +1291,8 @@ export class APIService {
           source_id
           platform_id
           source_desc
+          is_survey
+          region
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -784,10 +1310,30 @@ export class APIService {
           source_id
           platform_id
           source_desc
+          is_survey
+          region
         }
       }`;
     const response = (await API.graphql(graphqlOperation(statement))) as any;
     return <Array<ListSourcesQuery>>response.data.listSources;
+  }
+  async GetTrendingTopics(topic: string): Promise<GetTrendingTopicsQuery> {
+    const statement = `query GetTrendingTopics($topic: String!) {
+        getTrendingTopics(topic: $topic) {
+          __typename
+          topic
+          counts
+          n_gram
+          created_time
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      topic
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetTrendingTopicsQuery>response.data.getTrendingTopics;
   }
   async ListTrendingTopics(): Promise<Array<ListTrendingTopicsQuery>> {
     const statement = `query ListTrendingTopics {
@@ -802,97 +1348,105 @@ export class APIService {
     const response = (await API.graphql(graphqlOperation(statement))) as any;
     return <Array<ListTrendingTopicsQuery>>response.data.listTrendingTopics;
   }
-  async ListDiscourseHashtags(): Promise<Array<ListDiscourseHashtagsQuery>> {
-    const statement = `query ListDiscourseHashtags {
-        listDiscourseHashtags {
+  async ListTrendingTopicss(): Promise<Array<ListTrendingTopicssQuery>> {
+    const statement = `query ListTrendingTopicss {
+        listTrendingTopicss {
           __typename
+          topic
           counts
-          hashtag
+          n_gram
+          created_time
         }
       }`;
     const response = (await API.graphql(graphqlOperation(statement))) as any;
-    return <Array<ListDiscourseHashtagsQuery>>(
-      response.data.listDiscourseHashtags
-    );
+    return <Array<ListTrendingTopicssQuery>>response.data.listTrendingTopicss;
   }
-  async ListTrendingHashtags(
-    start: string,
-    end: string
-  ): Promise<Array<ListTrendingHashtagsQuery>> {
-    const statement = `query ListTrendingHashtags($start: String!, $end: String!) {
-        listTrendingHashtags(start: $start, end: $end) {
+  async ListImpactTree(): Promise<Array<ListImpactTreeQuery>> {
+    const statement = `query ListImpactTree {
+        listImpactTree {
           __typename
-          counts
-          hashtag
-          sentiment
-          negative
-          neutral
-          positive
-          start_date
+          tag
+          level0
+          level1
+          level2
+        }
+      }`;
+    const response = (await API.graphql(graphqlOperation(statement))) as any;
+    return <Array<ListImpactTreeQuery>>response.data.listImpactTree;
+  }
+  async GetRegions(region: string): Promise<GetRegionsQuery> {
+    const statement = `query GetRegions($region: String!) {
+        getRegions(region: $region) {
+          __typename
+          region
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      start,
-      end
+      region
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <Array<ListTrendingHashtagsQuery>>response.data.listTrendingHashtags;
+    return <GetRegionsQuery>response.data.getRegions;
   }
-  async DiscourseTrendingTopics(
-    start: string,
-    end: string,
-    region: string,
-    topic: string
-  ): Promise<Array<DiscourseTrendingTopicsQuery>> {
-    const statement = `query DiscourseTrendingTopics($start: String!, $end: String!, $region: String!, $topic: String!) {
-        discourseTrendingTopics(start: $start, end: $end, region: $region, topic: $topic) {
+  async ListRegionss(): Promise<Array<ListRegionssQuery>> {
+    const statement = `query ListRegionss {
+        listRegionss {
           __typename
-          counts
-          sentiment
-          topic
-          date
+          region
+        }
+      }`;
+    const response = (await API.graphql(graphqlOperation(statement))) as any;
+    return <Array<ListRegionssQuery>>response.data.listRegionss;
+  }
+  async GetTodo(id: string): Promise<GetTodoQuery> {
+    const statement = `query GetTodo($id: ID!) {
+        getTodo(id: $id) {
+          __typename
+          id
+          name
+          description
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      start,
-      end,
-      region,
-      topic
+      id
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <Array<DiscourseTrendingTopicsQuery>>(
-      response.data.discourseTrendingTopics
-    );
+    return <GetTodoQuery>response.data.getTodo;
   }
-  async HashtagMaster(
-    start: string,
-    end: string,
-    region: string,
-    topic: string
-  ): Promise<Array<HashtagMasterQuery>> {
-    const statement = `query HashtagMaster($start: String!, $end: String!, $region: String!, $topic: String!) {
-        hashtagMaster(start: $start, end: $end, region: $region, topic: $topic) {
+  async ListTodos(
+    filter?: ModelTodoFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListTodosQuery> {
+    const statement = `query ListTodos($filter: ModelTodoFilterInput, $limit: Int, $nextToken: String) {
+        listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
-          counts
-          sentiment
-          topic
-          date
+          items {
+            __typename
+            id
+            name
+            description
+          }
+          nextToken
         }
       }`;
-    const gqlAPIServiceArguments: any = {
-      start,
-      end,
-      region,
-      topic
-    };
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <Array<HashtagMasterQuery>>response.data.hashtagMaster;
+    return <ListTodosQuery>response.data.listTodos;
   }
   OnCreateDiscourseListener: Observable<
     OnCreateDiscourseSubscription
@@ -905,9 +1459,14 @@ export class APIService {
           content
           source_id
           region
-          country_code
           created_time
           imported_time
+          secondary_content
+          isPost
+          post_id
+          ori_id
+          country_code
+          url
         }
       }`
     )
@@ -954,6 +1513,7 @@ export class APIService {
           __typename
           platform_id
           platform_desc
+          platform_type
         }
       }`
     )
@@ -967,8 +1527,78 @@ export class APIService {
           source_id
           platform_id
           source_desc
+          is_survey
+          region
         }
       }`
     )
   ) as Observable<OnCreateSourceSubscription>;
+
+  OnCreateTrendingTopicsListener: Observable<
+    OnCreateTrendingTopicsSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTrendingTopics {
+        onCreateTrendingTopics {
+          __typename
+          topic
+          counts
+          n_gram
+          created_time
+        }
+      }`
+    )
+  ) as Observable<OnCreateTrendingTopicsSubscription>;
+
+  OnCreateRegionsListener: Observable<
+    OnCreateRegionsSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateRegions {
+        onCreateRegions {
+          __typename
+          region
+        }
+      }`
+    )
+  ) as Observable<OnCreateRegionsSubscription>;
+
+  OnCreateTodoListener: Observable<OnCreateTodoSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTodo {
+        onCreateTodo {
+          __typename
+          id
+          name
+          description
+        }
+      }`
+    )
+  ) as Observable<OnCreateTodoSubscription>;
+
+  OnUpdateTodoListener: Observable<OnUpdateTodoSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateTodo {
+        onUpdateTodo {
+          __typename
+          id
+          name
+          description
+        }
+      }`
+    )
+  ) as Observable<OnUpdateTodoSubscription>;
+
+  OnDeleteTodoListener: Observable<OnDeleteTodoSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteTodo {
+        onDeleteTodo {
+          __typename
+          id
+          name
+          description
+        }
+      }`
+    )
+  ) as Observable<OnDeleteTodoSubscription>;
 }

@@ -8,5 +8,15 @@
         "configLevel": "project",
         "useProfile": false,
         "awsConfigFilePath": "C:\\Users\\iGuest\\.amplify\\awscloudformation\\i7fScIfNvm"
+    },
+    "try": {
+        "configLevel": "project",
+        "useProfile": false,
+        "awsConfigFilePath": "C:\\Users\\iGuest\\.amplify\\awscloudformation\\d2t3jSsvGD"
+    },
+    "devtwo": {
+        "configLevel": "project",
+        "useProfile": false,
+        "awsConfigFilePath": "C:\\Users\\iGuest\\.amplify\\awscloudformation\\RP7ajleNtZ"
     }
 }

@@ -5,20 +5,20 @@ body {
 #top-nav {
   background-color: #2098d1;
   position: fixed;
-  padding: 7px 10px 11px 19px;
+  padding: 55px 0px 13px 0px;
   z-index: 1000;
 }
 .navbar {
   overflow: hidden;
   width: 100%;
-  background-color: #24292E;
+  background-color: #414243;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 70px;
   z-index: 100;
-  padding: 0 80px
+  padding: 0px 80px;
 }
 
 .navbar a {
@@ -78,6 +78,35 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-
+img.logo {
+  width: 28em;
 }
+
+@media (max-width: 768px) {
+  img.logo {
+    width: 20em;
+  }
+}
+
+.tabIcons {
+  width: 22px;
+  height: 22px;
+  margin: auto;
+  display: block;
+  position: relative!important;
+  background-size: cover;
+  margin-bottom: 3px;
+}
+
+.trending-icon {
+  background-image: url("/assets/trending.svg");
+}
+
+.verbatim-icon {
+  background-image: url("/assets/verbatim.svg");
+}
+
+.about-icon {
+  background-image: url("/assets/about.svg") !important;
+}
+
