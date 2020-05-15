@@ -10,6 +10,16 @@
 			"StackName": "amplify-newimp-devtwo-152010",
 			"StackId": "arn:aws:cloudformation:us-west-2:749571805792:stack/amplify-newimp-devtwo-152010/140b9a10-9631-11ea-ac94-06ac44ac494e",
 			"AmplifyAppId": "d2c912x5cs8l61"
+		},
+		"categories": {
+			"api": {
+				"newImpact": {
+					"rdsRegion": "us-west-2",
+					"rdsClusterIdentifier": "arn:aws:rds:us-west-2:749571805792:cluster:newimpact-dev",
+					"rdsSecretStoreArn": "arn:aws:secretsmanager:us-west-2:749571805792:secret:rds-db-credentials/cluster-N5UBIT4Z5XFIM2RXG66EWEC5TI/seanyang-8AyT01",
+					"rdsDatabaseName": "newimpact"
+				}
+			}
 		}
 	},
 	"api": {
@@ -32,23 +42,18 @@
 				"GraphQLAPIKeyOutput": "da2-youeb2krl5gvlm4odlnj6h44jm"
 			},
 			"rdsInit": true,
+			"lastPushTimeStamp": "2020-05-15T04:55:51.895Z",
 			"providerMetadata": {
 				"s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"logicalId": "apinewImpact"
 			},
-			"lastPushTimeStamp": "2020-05-14T22:33:45.472Z",
-			"lastPushDirHash": "zUr3xbnDFMQeQZTc7XNX4Ao/+jQ="
+			"lastPushDirHash": "/ngqD77Ebb/lenWI5n+eb1Nu2kg="
 		}
 	},
 	"hosting": {
 		"S3AndCloudFront": {
 			"service": "S3AndCloudFront",
 			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/hosting/template.json",
-				"logicalId": "hostingS3AndCloudFront"
-			},
-			"lastPushTimeStamp": "2020-05-14T22:33:45.472Z",
 			"output": {
 				"CloudFrontSecureURL": "https://d1jfog88m7gtu9.cloudfront.net",
 				"S3BucketSecureURL": "https://newimpactprojectapi-devtwo.s3.amazonaws.com",
@@ -58,6 +63,11 @@
 				"Region": "us-west-2",
 				"HostingBucketName": "newimpactprojectapi-devtwo",
 				"CloudFrontDomainName": "d1jfog88m7gtu9.cloudfront.net"
+			},
+			"lastPushTimeStamp": "2020-05-15T04:55:51.895Z",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
 			},
 			"lastPushDirHash": "Gq/nTmi3CfYEQkX7Ljr4Df4NML4="
 		}

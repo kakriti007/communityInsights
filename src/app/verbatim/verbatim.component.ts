@@ -117,7 +117,6 @@ export class VerbatimComponent implements OnInit {
  
   ngOnInit(): void {
     this.isOn = true;
-
     this.data.share.subscribe(x=>
       {
         if(this.text!= x){

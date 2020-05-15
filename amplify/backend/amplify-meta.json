@@ -36,7 +36,7 @@
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/api/cloudformation-template.json",
                 "logicalId": "apinewImpact"
             },
-            "lastPushTimeStamp": "2020-05-14T22:53:48.892Z",
+            "lastPushTimeStamp": "2020-05-15T05:04:59.007Z",
             "lastPushDirHash": "zUr3xbnDFMQeQZTc7XNX4Ao/+jQ="
         }
     },
@@ -48,7 +48,7 @@
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-newimp-devtwo-152010-deployment/amplify-cfn-templates/hosting/template.json",
                 "logicalId": "hostingS3AndCloudFront"
             },
-            "lastPushTimeStamp": "2020-05-14T22:53:48.895Z",
+            "lastPushTimeStamp": "2020-05-15T05:04:59.009Z",
             "output": {
                 "CloudFrontSecureURL": "https://d1jfog88m7gtu9.cloudfront.net",
                 "S3BucketSecureURL": "https://newimpactprojectapi-devtwo.s3.amazonaws.com",
