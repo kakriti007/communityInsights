@@ -3,7 +3,8 @@ import { NgModule, ViewChild, ElementRef, VERSION, OnInit } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 
-import * as d3plus from 'd3plus';
+
+import * as d3plus from './../d3plus.full';
 
 import { Apollo } from "apollo-angular";
 import gql from "graphql-tag";

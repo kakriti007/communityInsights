@@ -31,8 +31,6 @@
     "apollo-link": "^1.2.3",
     "aws-amplify": "^2.3.0",
     "aws-appsync": "3.0.2",
-    "d3-scale": "^3.2.1",
-    "d3plus": "^2.0.0-alpha.25",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "ngx-chips": "^2.1.0",

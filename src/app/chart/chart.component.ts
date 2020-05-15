@@ -14,8 +14,7 @@ import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
 import Amplify, { Auth } from 'aws-amplify';
 import { pluck } from 'rxjs/operators';
 
-
-import * as d3plus from 'd3plus';
+import * as d3plus from './../d3plus.full';
 
 
 @Component({
